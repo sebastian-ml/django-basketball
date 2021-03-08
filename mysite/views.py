@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from .models import PlayerStatistics
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
-# Create your views here.
+
+class PlayerStatsCreate(CreateView):
+    model = PlayerStatistics
+    fields = '__all__'
+    success_url = reverse_lazy('home:player-stats-add')
