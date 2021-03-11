@@ -13,4 +13,11 @@ urlpatterns = [
         ),
         name='player-stats-add'
     ),
+    path(
+        'player/rank',
+        views.PlayerStatsList.as_view(
+            template_name=template_dir + 'player-rank.html'
+        ),
+        name='player-rank'
+    ),
 ]

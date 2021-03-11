@@ -3,7 +3,7 @@ from . import views
 
 
 app_name = 'game'
-template_dir = 'game'
+template_dir = 'game/'
 
 urlpatterns = [
     path(

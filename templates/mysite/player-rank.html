@@ -1,0 +1,8 @@
+{% extends 'mysite/base.html' %}
+{% block content %}
+    <ul>
+        {% for player in player_rank %}
+            <li>{{ player }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
