@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from mysite.models import Team
 
@@ -25,5 +26,13 @@ class Game(models.Model):
     class Meta:
         unique_together = ['team_1', 'team_2', 'date']
 
+    def clean(self):
+        # Do not allow to choose the same home and away team
+        if self.team_2 == self.team_1:
+            raise ValidationError(
+                'Mecz musi być rozgrywany pomiędzy dwoma różnymi drużynami!'
+            )
+
     def __str__(self):
-        return f'{self.team_1} vs {self.team_2} | {self.date}'
+        return f'{self.id}. {self.team_1} vs {self.team_2} ' \
+               f'| {self.date} | season {self.season.year}'
