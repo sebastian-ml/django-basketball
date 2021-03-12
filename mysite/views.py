@@ -1,6 +1,6 @@
 from .models import PlayerStatistics
 from django.urls import reverse_lazy
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.views.generic import CreateView, ListView
 
 
@@ -22,7 +22,8 @@ class PlayerStatsList(ListView):
 
         context['player_rank'] = PlayerStatistics.objects\
             .values('player__id')\
-            .annotate(total_fouls=Sum('q1_foul'))\
+            .annotate(total_fouls=Sum('q1_foul'),
+                      games_played=Count('q1_foul'))\
             .order_by('-total_fouls')
 
         return context
