@@ -13,6 +13,10 @@ class Season(models.Model):
 
 
 class Game(models.Model):
+    """
+    Create game between 2 teams.
+    Allow to add info if a team lost by forfeit.
+     """
     date = models.DateField()
     team_1 = models.ForeignKey(Team,
                                on_delete=models.CASCADE,
@@ -22,6 +26,9 @@ class Game(models.Model):
                                related_name='away_team')
     season = models.ForeignKey(Season,
                                on_delete=models.CASCADE)
+    forfeit = models.ForeignKey(Team,
+                                on_delete=models.CASCADE,
+                                blank=True, null=True)
 
     class Meta:
         unique_together = ['team_1', 'team_2', 'date']
@@ -31,6 +38,11 @@ class Game(models.Model):
         if self.team_2 == self.team_1:
             raise ValidationError(
                 'Mecz musi być rozgrywany pomiędzy dwoma różnymi drużynami!'
+            )
+        # Team which lost by forfeit must be team 1 or team 2
+        if self.forfeit not in [self.team_1, self.team_2]:
+            raise ValidationError(
+                f'Walkower można wybrać tylko dla drużyny {self.team_1} lub {self.team_2}'
             )
 
     def __str__(self):
