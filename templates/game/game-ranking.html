@@ -1,20 +1,25 @@
 {% extends 'mysite/base.html' %}
 {% block content %}
-        <ul>
-            {% for game in games %}
-                <li>{{ game }}</li>
-            {% endfor %}
-        </ul>
+    <ul>
+        {% for game in games %}
+            <li>{{ game }}</li>
+        {% endfor %}
+    </ul>
 
-        <ul>
-            {% for i in merge %}
-                <li>{{ i }}</li>
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for i in aggr_player_stats %}
-                <li>{{ i }}</li>
-            {% endfor %}
-        </ul>
+    <ul>
+        {% for i in merge %}
+            <li>{{ i }}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for i in aggr_player_stats %}
+            <li>{{ i }}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for i in test %}
+            <li>{{ i }}</li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}
