@@ -49,5 +49,11 @@ class PlayerStatistics(models.Model):
                 f'{self.game.team_2.name} lub {self.game.team_1.name}!'
             )
 
+        # Forbid adding player statistics if the game was ended by forfeit
+        if self.game.forfeit is not None:
+            raise ValidationError(
+                'Nie można dodać statystyk gracza do meczu zakończonego walkowerem.'
+            )
+
     def __str__(self):
         return f'{self.player} | {self.game}'
