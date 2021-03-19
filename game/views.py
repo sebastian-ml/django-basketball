@@ -1,7 +1,7 @@
 from .models import Game
-from mysite.models import PlayerStatistics as PS
+from playerstats.models import PlayerStatistics as PS
 from django.urls import reverse_lazy
-from django.db.models import Sum
+from django.db.models import Sum, Count
 import pandas as pd
 from django.views.generic import CreateView, ListView
 
@@ -45,6 +45,8 @@ class GameRankingList(ListView):
         Each game id should have 2 rows - 1 row for winner, and 1 row for looser.
         Each row contains points for team 1 for a certain game (2 - win, 1 - loss)
         """
+        #filtered_stats = PS.objects.annotate(player_stats=Count())
+
         # Calculate total points, group by team and game
         stats = PS.objects \
             .values('player__team_id', 'game_id') \

@@ -8,6 +8,9 @@ class Season(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
+    class Meta:
+        db_table = 'season'
+
     def __str__(self):
         return f'{self.year} season'
 
@@ -32,6 +35,7 @@ class Game(models.Model):
 
     class Meta:
         unique_together = ['team_1', 'team_2', 'date']
+        db_table = 'game'
 
     def clean(self):
         # Do not allow to choose the same home and away team
