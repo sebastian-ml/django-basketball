@@ -44,7 +44,7 @@ class Game(models.Model):
                 'Mecz musi być rozgrywany pomiędzy dwoma różnymi drużynami!'
             )
         # Team which lost by forfeit must be team 1 or team 2
-        if self.forfeit not in [self.team_1, self.team_2]:
+        if self.forfeit not in [self.team_1, self.team_2, None]:
             raise ValidationError(
                 f'Walkower można wybrać tylko dla drużyny {self.team_1} lub {self.team_2}'
             )
