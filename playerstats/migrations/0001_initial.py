@@ -18,9 +18,6 @@ class Migration(migrations.Migration):
             name='PlayerStatistics',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('q1_foul', models.IntegerField()),
-                ('q2_foul', models.IntegerField()),
-                ('q3_foul', models.IntegerField()),
                 ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='game.game')),
                 ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='mysite.player')),
             ],
