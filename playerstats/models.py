@@ -144,7 +144,9 @@ class PlayerStatistics(models.Model):
         # One game = max 2 player statistics from one team
         num_of_assigned_team_stats = PlayerStatistics.objects \
             .filter(game__id=self.game.id,
-                    player__team__name=self.player.team.name).count()
+                    player__team__name=self.player.team.name) \
+            .exclude(id=self.id) \
+            .count()
 
         if num_of_assigned_team_stats == PlayerStatistics.MAX_PLAYER_STATS_PER_GAME / 2:
             raise ValidationError(
@@ -155,7 +157,9 @@ class PlayerStatistics(models.Model):
 
         # One game = max 4 player statistics
         num_of_assigned_stats = PlayerStatistics.objects \
-            .filter(game__id=self.game.id).count()
+            .filter(game__id=self.game.id) \
+            .exclude(id=self.id) \
+            .count()
 
         if num_of_assigned_stats == PlayerStatistics.MAX_PLAYER_STATS_PER_GAME:
             raise ValidationError(
