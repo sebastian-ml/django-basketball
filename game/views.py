@@ -1,18 +1,20 @@
+from django.urls import reverse_lazy
+from django.db.models import Sum, Count
+from django.views.generic import CreateView, ListView
 from .models import Game
 from playerstats.models import PlayerStatistics as PS
-from django.urls import reverse_lazy
-from django.db.models import Sum
 import pandas as pd
-from django.views.generic import CreateView, ListView
 
 
-def get_all_teams():
-    """Get all teams which played in the certain season. Returns as pd df."""
-    home_teams = Game.objects.values_list('team_1', flat=True).distinct()
-    away_teams = Game.objects.values_list('team_2', flat=True).distinct()
-    distinct_teams = list(set().union(home_teams, away_teams))
+def get_valid_games_ids(num_of_stats):
+    """Return queryset with games ids which have assigned 4 player stats."""
+    total_assigned_stats = PS.objects.all() \
+        .values('game') \
+        .annotate(total=Count('game'))
+    games_with_full_stats = total_assigned_stats.filter(total=num_of_stats)
+    valid_games_ids = games_with_full_stats.values_list('game', flat=True)
 
-    return pd.DataFrame(distinct_teams, columns=['team'])
+    return valid_games_ids
 
 
 def get_forfeit_games():
@@ -37,7 +39,7 @@ def get_forfeit_games():
     return merged
 
 
-def get_games_result():
+def get_games_result(stats):
     """
     For each game check if the team lost or won. Return as pd df.
     Each row should contain team1, team2.
@@ -45,12 +47,12 @@ def get_games_result():
     Each row contains points for team 1 for a certain game (2 - win, 1 - loss)
     """
     # Calculate total points, group by team and game
-    stats = PS.objects \
+    aggr_game_stats = stats \
         .values('player__team_id', 'game_id') \
         .annotate(total_points=Sum('q1_foul'))
 
     # Make additional copy of stats, store as df
-    df_stats = pd.DataFrame(stats)
+    df_stats = pd.DataFrame(aggr_game_stats)
     df_stats2 = df_stats.copy()[
         ['player__team_id', 'game_id', 'total_points']]
 
@@ -74,11 +76,13 @@ def calc_ranking(game_table, forfeits):
     total_points = game_table.groupby(['player__team_id_x'], as_index=False).sum()
 
     # Combine df with forfeit df
-    games_result = forfeits\
+    games_result = forfeits \
         .merge(total_points, left_on='team', right_on='player__team_id_x', how='outer')
+
+    # Create col with total points ('normal' + forfeit wins)
     games_result['total_pts'] = games_result['points'].fillna(0) + games_result['forfeit_wins'] * 2
 
-    # Ranking sorted by total points
+    # Ranking, sorted by total points
     games_result.sort_values(by=['total_pts'], inplace=True, ascending=False)
 
     return games_result
@@ -98,15 +102,15 @@ class GameRankingList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        all_teams = get_all_teams()  # Get all team names
-        forfeits = get_forfeit_games()  # Get all wins losses by forfeit
+        # Get stats which occurs only 4 times per game id (2 teams * 2 players)
+        valid_games = get_valid_games_ids(4)
+        stats = PS.objects.filter(game__in=valid_games)
 
-        score = all_teams\
-            .merge(forfeits, left_on='team', right_on='team', how='outer')\
-            .fillna(0)
+        # Calculate valid games results and get all wins & losses by forfeit
+        games_result = get_games_result(stats)
+        forfeits = get_forfeit_games()
 
-        games_result = get_games_result()  # Get points from games without forfeit
-        ranking = calc_ranking(games_result, score)
+        ranking = calc_ranking(games_result, forfeits)  # Team ranking
 
         context['test'] = games_result.to_dict('records')
         context['merge'] = ranking.to_dict('records')
