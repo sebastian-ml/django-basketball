@@ -1,19 +1,20 @@
 // Configuration and helpers
-@use 'abstracts/variables';
-@use 'abstracts/mixins';
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
 
 // Base stuff
-@use 'base/base';
-@use 'base/typography';
+@import 'base/normalize';
+@import 'base/base';
+@import 'base/typography';
 
 // Layout-related sections
-@use 'layout/header';
-@use 'layout/navigation';
+@import 'layout/header';
+@import 'layout/navigation';
 
 // Components
-@use 'components/buttons';
-@use 'components/dropdown';
+@import 'components/buttons';
+@import 'components/dropdown';
 
 // Page-specific styles
-@use 'pages/gamestats-ranking';
-@use 'pages/home';
+@import 'pages/gamestats-ranking';
+@import 'pages/home';
