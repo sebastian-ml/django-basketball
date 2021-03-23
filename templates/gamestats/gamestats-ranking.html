@@ -1,0 +1,13 @@
+{% extends 'mysite/base.html' %}
+{% block content %}
+    <ul>
+        {% for game in gamestats %}
+            <li>{{ game }}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for game, value in test.items %}
+            <li>{{ value.wins }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

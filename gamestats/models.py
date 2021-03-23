@@ -50,6 +50,24 @@ class GameStats(models.Model):
         else:
             return self.get_score > self.get_opponent_score
 
+    def game_is_over(self, expected_stats_count=4):
+        """
+        Check if the game has all player stats or the game ended by forfeit.
+
+        expected_stats_count -- number of unique player stats related to the game.
+        E.g. 4 means that the game must have exactly 4 player stats.
+        """
+        assigned_player_stats = PS.objects.filter(game=self.game).count()
+        assigned_player_stats_team = PS.objects \
+            .filter(game=self.game, player__team=self.team).count()
+
+        game_has_required_stats = (
+                (assigned_player_stats == expected_stats_count) and
+                (assigned_player_stats_team == expected_stats_count / 2)
+        )
+
+        return game_has_required_stats or self.game_ended_by_forfeit
+
     def clean(self):
         # Chosen team must be same as team1 or team2 from the desired game
         if self.team not in [self.game.team_1, self.game.team_2]:
