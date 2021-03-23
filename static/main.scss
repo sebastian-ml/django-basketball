@@ -1,0 +1,19 @@
+// Configuration and helpers
+@use 'abstracts/variables';
+@use 'abstracts/mixins';
+
+// Base stuff
+@use 'base/base';
+@use 'base/typography';
+
+// Layout-related sections
+@use 'layout/header';
+@use 'layout/navigation';
+
+// Components
+@use 'components/buttons';
+@use 'components/dropdown';
+
+// Page-specific styles
+@use 'pages/gamestats-ranking';
+@use 'pages/home';

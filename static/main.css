@@ -1,0 +1,15 @@
+:root {
+  --primary-color: #1b2740;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/*# sourceMappingURL=main.css.map */
