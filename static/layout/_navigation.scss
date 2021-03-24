@@ -1,0 +1,26 @@
+.menu {
+  font-size: $font-size-md;
+
+  &__list {
+    height: 100%;
+    display: flex;
+    background-color: $primary-color;
+  }
+
+  &__item {
+    min-width: 100px;
+
+    &:hover .dropdown__header {
+      color: $text-color-hover;
+    }
+  }
+
+  &__link {
+    height: 100%;
+    @include flexbox(center, center);
+
+    &:hover {
+      color: $text-color-hover;
+    }
+  }
+}

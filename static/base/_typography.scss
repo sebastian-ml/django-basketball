@@ -1,3 +1,13 @@
 body {
   color: $text-color-light;
+  font-family: "Trebuchet MS", serif;
+}
+
+a {
+  color: $text-color-light;
+  text-decoration: none;
+
+  &:visited {
+    color: $text-color-light;
+  }
 }
