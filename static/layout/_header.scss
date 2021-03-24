@@ -1,5 +1,6 @@
 .header {
   background-color: $primary-color;
+  border-bottom: 1px solid #232323;
   height: $header-height;
   @include flexbox(center);
 

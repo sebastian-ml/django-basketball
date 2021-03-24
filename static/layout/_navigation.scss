@@ -1,6 +1,4 @@
 .menu {
-  font-size: $font-size-md;
-
   &__list {
     height: 100%;
     display: flex;
@@ -11,7 +9,7 @@
     min-width: 100px;
 
     &:hover .dropdown__header {
-      color: $text-color-hover;
+      color: $color-light-hover;
     }
   }
 
@@ -20,7 +18,7 @@
     @include flexbox(center, center);
 
     &:hover {
-      color: $text-color-hover;
+      color: $color-light-hover;
     }
   }
 }

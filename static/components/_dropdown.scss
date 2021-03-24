@@ -9,7 +9,7 @@
       visibility: visible;
     }
     .dropdown__header {
-      color: $text-color-hover;
+      color: $color-light-hover;
     }
   }
 
@@ -41,7 +41,7 @@
     @include flexbox(center, center);
 
     &:hover {
-      color: $text-color-hover;
+      color: $color-light-hover;
     }
   }
 }
