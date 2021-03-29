@@ -9,12 +9,17 @@
 @import 'base/typography';
 
 // Layout-related sections
+@import 'layout/grid';
 @import 'layout/header';
+@import 'layout/main';
 @import 'layout/navigation';
 
 // Components
 @import 'components/buttons';
+@import 'components/card';
 @import 'components/dropdown';
+@import 'components/hr';
+@import 'components/select';
 @import 'components/table';
 
 // Page-specific styles

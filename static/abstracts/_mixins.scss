@@ -13,3 +13,9 @@
   width: $width;
   height: $height;
 }
+
+// Basic boxshadow
+@mixin boxshadow() {
+  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
+  box-shadow: 3px 3px 12px 1px #cecece;
+}

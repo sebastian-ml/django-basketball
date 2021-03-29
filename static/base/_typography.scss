@@ -1,5 +1,5 @@
 body {
-  color: $color-light;
+  color: #000;
   font-family: "Trebuchet MS", serif;
 }
 
@@ -10,4 +10,14 @@ a {
   &:visited {
     color: $color-light;
   }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #000;
+  margin-top: 0;
+  font-weight: normal;
 }

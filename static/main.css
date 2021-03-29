@@ -367,7 +367,7 @@ ul {
 }
 
 body {
-  color: #d8d8d8;
+  color: #000;
   font-family: "Trebuchet MS", serif;
 }
 
@@ -379,9 +379,25 @@ a:visited {
   color: #d8d8d8;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #000;
+  margin-top: 0;
+  font-weight: normal;
+}
+
+.grid {
+  display: grid;
+  grid-gap: 2rem;
+}
+
 .header {
   background-color: #323232;
   border-bottom: 1px solid #232323;
+  color: #d8d8d8;
   height: 60px;
   display: flex;
   justify-content: center;
@@ -389,6 +405,17 @@ a:visited {
 .header__container {
   display: flex;
   justify-content: flex-end;
+}
+
+.main {
+  min-height: calc(100vh - 60px);
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+.main--centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .menu__list {
@@ -410,6 +437,14 @@ a:visited {
 }
 .menu__link:hover {
   color: #fff;
+}
+
+.card {
+  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
+  box-shadow: 3px 3px 12px 1px #cecece;
+  background-color: #fff;
+  border-radius: 7px;
+  padding: 1.5rem;
 }
 
 .dropdown {
@@ -453,6 +488,18 @@ a:visited {
 }
 .dropdown__link:hover {
   color: #fff;
+}
+
+hr {
+  height: 2px;
+  background-color: #d4d4d4;
+  border: none;
+}
+
+select {
+  border-radius: 3px;
+  border-color: #d8d8d8;
+  cursor: pointer;
 }
 
 .table {

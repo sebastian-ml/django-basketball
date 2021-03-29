@@ -1,6 +1,19 @@
 {% extends 'mysite/base.html' %}
 {% block content %}
-    {% include 'mysite/_table.html' %}
+    <main class="main main--centered container">
+        <div class="grid">
+            <div class="card">
+                <h1>Sezon 2021 statystyki</h1>
+                <hr>
+                <label for="seasons">Sezon</label>
+                <select name="seasons" id="seasons">
+                    <option>20</option>
+                    <option>21</option>
+                </select>
+            </div>
+            {% include 'mysite/_table.html' %}
+        </div>
+    </main>
     {#    <ul>#}
     {#        {% for game in gamestats %}#}
     {#            <li>{{ game }}</li>#}
