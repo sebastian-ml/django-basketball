@@ -1,31 +1,5 @@
 <header class="header">
     <div class="container header__container">
-        <nav class="menu">
-            <ul class="menu__list">
-                <li class="menu__item"><a class="menu__link" href="#">Home</a></li>
-                <li class="menu__item">
-                    <div class="dropdown">
-                        <header class="dropdown__header">Ranking</header>
-                        <ul class="dropdown__list">
-                            <li class="dropdown__item">
-                                <a class="dropdown__link" href="{% url 'gamestats:ranking' %}">Drużyny</a>
-                            </li>
-                            <li class="dropdown__item">
-                                <a class="dropdown__link" href="{% url 'playerstats:player-ranking' %}">Zawodnicy</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="menu__item">
-                    <div class="dropdown">
-                        <header class="dropdown__header">Statystyki</header>
-                        <ul class="dropdown__list">
-                            <li class="dropdown__item"><a class="dropdown__link">Dodaj</a></li>
-                            <li class="dropdown__item"><a class="dropdown__link">Edytuj</a></li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+        {% include 'mysite/_menu.html' %}
     </div>
 </header>

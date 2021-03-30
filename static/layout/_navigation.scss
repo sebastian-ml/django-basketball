@@ -1,24 +1,80 @@
 .menu {
-  &__list {
+  $gap-size: 2px;
+
+  &__list,
+  &__sublist,
+  &__link,
+  &__item {
     height: 100%;
-    display: flex;
-    background-color: $primary-color;
   }
 
-  &__item {
-    min-width: 100px;
-
-    &:hover .dropdown__header {
-      color: $color-light-hover;
-    }
+  &__list {
+    display: flex;
   }
 
   &__link {
-    height: 100%;
+    transition: background $transition-short, color $transition-short;
+    position: relative;
+    padding: 1em;
+    background-color: $primary-color;
     @include flexbox(center, center);
+    border-radius: $border-radius-small;
 
     &:hover {
       color: $color-light-hover;
+      background-color: $primary-color-hover;
+    }
+  }
+
+  &__dropdown {
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity $transition-medium;
+
+    .menu__item {
+      transition: transform $transition-medium;
+      transform: translateY(150%);
+    }
+  }
+
+  &__item {
+    position: relative;
+    cursor: pointer;
+    min-width: 100px;
+    padding-bottom: $gap-size;
+
+    &:hover {
+      .menu__dropdown {
+        opacity: 1;
+        pointer-events: initial;
+
+        > .menu__item {
+          transform: translateY(0);
+        }
+      }
+
+      > .menu__sublist {
+        opacity: 1;
+        pointer-events: initial;
+
+        .menu__item {
+          transform: translateX(0);
+        }
+      }
+    }
+  }
+
+  &__sublist {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transition: opacity $transition-medium;
+    opacity: 0;
+    pointer-events: none;
+
+    .menu__item {
+      padding-left: $gap-size;
+      transform: translateX(75%);
     }
   }
 }
