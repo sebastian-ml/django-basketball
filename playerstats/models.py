@@ -12,24 +12,24 @@ class PlayerStatistics(models.Model):
     """
     MAX_PLAYER_STATS_PER_GAME = 4  # One game can have max 4 player statistics.
 
-    shot_1_pts_ok = models.PositiveIntegerField(default=0)
-    shot_1_pts_total = models.PositiveIntegerField(default=0)
-    shot_2_pts_ok = models.PositiveIntegerField(default=0)
-    shot_2_pts_total = models.PositiveIntegerField(default=0)
-    shot_3_pts_ok = models.PositiveIntegerField(default=0)
-    shot_3_pts_total = models.PositiveIntegerField(default=0)
+    shot_1_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ1 O")
+    shot_1_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ1 T")
+    shot_2_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ2 O")
+    shot_2_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ2 T")
+    shot_3_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ2 O")
+    shot_3_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ3 T")
 
-    reb_def = models.PositiveIntegerField(default=0)
-    reb_off = models.PositiveIntegerField(default=0)
-    ast = models.PositiveIntegerField(default=0)
-    stl = models.PositiveIntegerField(default=0)
-    blck = models.PositiveIntegerField(default=0)
-    ball_loos = models.PositiveIntegerField(default=0)
-    foul_def = models.PositiveIntegerField(default=0)
-    foul_off = models.PositiveIntegerField(default=0)
-    foul_unsport = models.PositiveIntegerField(default=0)
-    foul_tech = models.PositiveIntegerField(default=0)
-    foul_disq = models.PositiveIntegerField(default=0)
+    reb_def = models.PositiveIntegerField(default=0, verbose_name="ZB D")
+    reb_off = models.PositiveIntegerField(default=0, verbose_name="ZB O")
+    ast = models.PositiveIntegerField(default=0, verbose_name="AS")
+    stl = models.PositiveIntegerField(default=0, verbose_name="PR")
+    blck = models.PositiveIntegerField(default=0, verbose_name="BL")
+    ball_loos = models.PositiveIntegerField(default=0, verbose_name="ST")
+    foul_def = models.PositiveIntegerField(default=0, verbose_name="FA DF")
+    foul_off = models.PositiveIntegerField(default=0, verbose_name="FA OF")
+    foul_unsport = models.PositiveIntegerField(default=0, verbose_name="FA N")
+    foul_tech = models.PositiveIntegerField(default=0, verbose_name="FA T")
+    foul_disq = models.PositiveIntegerField(default=0, verbose_name="FA D")
 
     player = models.ForeignKey(
         Player,
