@@ -12,87 +12,24 @@ class PlayerStatistics(models.Model):
     """
     MAX_PLAYER_STATS_PER_GAME = 4  # One game can have max 4 player statistics.
 
-    q1_shot_1_pts_ok = models.PositiveIntegerField(default=0)
-    q1_shot_1_pts_total = models.PositiveIntegerField(default=0)
-    q2_shot_1_pts_ok = models.PositiveIntegerField(default=0)
-    q2_shot_1_pts_total = models.PositiveIntegerField(default=0)
-    q3_shot_1_pts_ok = models.PositiveIntegerField(default=0)
-    q3_shot_1_pts_total = models.PositiveIntegerField(default=0)
-    q4_shot_1_pts_ok = models.PositiveIntegerField(default=0)
-    q4_shot_1_pts_total = models.PositiveIntegerField(default=0)
+    shot_1_pts_ok = models.PositiveIntegerField(default=0)
+    shot_1_pts_total = models.PositiveIntegerField(default=0)
+    shot_2_pts_ok = models.PositiveIntegerField(default=0)
+    shot_2_pts_total = models.PositiveIntegerField(default=0)
+    shot_3_pts_ok = models.PositiveIntegerField(default=0)
+    shot_3_pts_total = models.PositiveIntegerField(default=0)
 
-    q1_shot_2_pts_ok = models.PositiveIntegerField(default=0)
-    q1_shot_2_pts_total = models.PositiveIntegerField(default=0)
-    q2_shot_2_pts_ok = models.PositiveIntegerField(default=0)
-    q2_shot_2_pts_total = models.PositiveIntegerField(default=0)
-    q3_shot_2_pts_ok = models.PositiveIntegerField(default=0)
-    q3_shot_2_pts_total = models.PositiveIntegerField(default=0)
-    q4_shot_2_pts_ok = models.PositiveIntegerField(default=0)
-    q4_shot_2_pts_total = models.PositiveIntegerField(default=0)
-
-    q1_shot_3_pts_ok = models.PositiveIntegerField(default=0)
-    q1_shot_3_pts_total = models.PositiveIntegerField(default=0)
-    q2_shot_3_pts_ok = models.PositiveIntegerField(default=0)
-    q2_shot_3_pts_total = models.PositiveIntegerField(default=0)
-    q3_shot_3_pts_ok = models.PositiveIntegerField(default=0)
-    q3_shot_3_pts_total = models.PositiveIntegerField(default=0)
-    q4_shot_3_pts_ok = models.PositiveIntegerField(default=0)
-    q4_shot_3_pts_total = models.PositiveIntegerField(default=0)
-
-    q1_reb_def = models.PositiveIntegerField(default=0)
-    q2_reb_def = models.PositiveIntegerField(default=0)
-    q3_reb_def = models.PositiveIntegerField(default=0)
-    q4_reb_def = models.PositiveIntegerField(default=0)
-
-    q1_reb_off = models.PositiveIntegerField(default=0)
-    q2_reb_off = models.PositiveIntegerField(default=0)
-    q3_reb_off = models.PositiveIntegerField(default=0)
-    q4_reb_off = models.PositiveIntegerField(default=0)
-
-    q1_ast = models.PositiveIntegerField(default=0)
-    q2_ast = models.PositiveIntegerField(default=0)
-    q3_ast = models.PositiveIntegerField(default=0)
-    q4_ast = models.PositiveIntegerField(default=0)
-
-    q1_stl = models.PositiveIntegerField(default=0)
-    q2_stl = models.PositiveIntegerField(default=0)
-    q3_stl = models.PositiveIntegerField(default=0)
-    q4_stl = models.PositiveIntegerField(default=0)
-
-    q1_blck = models.PositiveIntegerField(default=0)
-    q2_blck = models.PositiveIntegerField(default=0)
-    q3_blck = models.PositiveIntegerField(default=0)
-    q4_blck = models.PositiveIntegerField(default=0)
-
-    q1_ball_loos = models.PositiveIntegerField(default=0)
-    q2_ball_loos = models.PositiveIntegerField(default=0)
-    q3_ball_loos = models.PositiveIntegerField(default=0)
-    q4_ball_loos = models.PositiveIntegerField(default=0)
-
-    q1_foul_def = models.PositiveIntegerField(default=0)
-    q2_foul_def = models.PositiveIntegerField(default=0)
-    q3_foul_def = models.PositiveIntegerField(default=0)
-    q4_foul_def = models.PositiveIntegerField(default=0)
-
-    q1_foul_off = models.PositiveIntegerField(default=0)
-    q2_foul_off = models.PositiveIntegerField(default=0)
-    q3_foul_off = models.PositiveIntegerField(default=0)
-    q4_foul_off = models.PositiveIntegerField(default=0)
-
-    q1_foul_unsport = models.PositiveIntegerField(default=0)
-    q2_foul_unsport = models.PositiveIntegerField(default=0)
-    q3_foul_unsport = models.PositiveIntegerField(default=0)
-    q4_foul_unsport = models.PositiveIntegerField(default=0)
-
-    q1_foul_tech = models.PositiveIntegerField(default=0)
-    q2_foul_tech = models.PositiveIntegerField(default=0)
-    q3_foul_tech = models.PositiveIntegerField(default=0)
-    q4_foul_tech = models.PositiveIntegerField(default=0)
-
-    q1_foul_disq = models.PositiveIntegerField(default=0)
-    q2_foul_disq = models.PositiveIntegerField(default=0)
-    q3_foul_disq = models.PositiveIntegerField(default=0)
-    q4_foul_disq = models.PositiveIntegerField(default=0)
+    reb_def = models.PositiveIntegerField(default=0)
+    reb_off = models.PositiveIntegerField(default=0)
+    ast = models.PositiveIntegerField(default=0)
+    stl = models.PositiveIntegerField(default=0)
+    blck = models.PositiveIntegerField(default=0)
+    ball_loos = models.PositiveIntegerField(default=0)
+    foul_def = models.PositiveIntegerField(default=0)
+    foul_off = models.PositiveIntegerField(default=0)
+    foul_unsport = models.PositiveIntegerField(default=0)
+    foul_tech = models.PositiveIntegerField(default=0)
+    foul_disq = models.PositiveIntegerField(default=0)
 
     player = models.ForeignKey(
         Player,
@@ -107,24 +44,7 @@ class PlayerStatistics(models.Model):
     @property
     def get_total_points(self):
         """Get total player score for the specific game."""
-        total_1_pts_shots = sum([self.q1_shot_1_pts_ok,
-                                 self.q2_shot_1_pts_ok,
-                                 self.q3_shot_1_pts_ok,
-                                 self.q4_shot_1_pts_ok])
-
-        total_2_pts_shots = sum([self.q1_shot_2_pts_ok,
-                                 self.q2_shot_2_pts_ok,
-                                 self.q3_shot_2_pts_ok,
-                                 self.q4_shot_2_pts_ok])
-
-        total_3_pts_shots = sum([self.q1_shot_3_pts_ok,
-                                 self.q2_shot_3_pts_ok,
-                                 self.q3_shot_3_pts_ok,
-                                 self.q4_shot_3_pts_ok])
-
-        return (total_1_pts_shots
-                + (total_2_pts_shots * 2)
-                + (total_3_pts_shots * 3))
+        return self.shot_1_pts_ok + self.shot_2_pts_ok + self.shot_3_pts_ok
 
     def clean(self):
         # Check if the selected player belongs to the team_1 or team_2 in the choosen game

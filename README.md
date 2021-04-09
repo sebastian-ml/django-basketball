@@ -12,4 +12,4 @@
 <li>HTML</li>
 <li>SCSS</li>
 <li>JavaScript - not implemented yet</li>
-<ul>
+</ul>
