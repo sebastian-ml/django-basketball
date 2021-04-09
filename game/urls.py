@@ -9,4 +9,7 @@ urlpatterns = [
     path('add/',
          views.GameCreate.as_view(template_name=template_dir + 'game-add.html'),
          name='game-add'),
+    path('schedule/',
+         views.GameSchedule.as_view(template_name=template_dir + 'game-schedule.html'),
+         name='game-schedule'),
 ]
