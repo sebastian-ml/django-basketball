@@ -1,7 +1,7 @@
 from .models import PlayerStatistics
 from django.urls import reverse_lazy
-from django.db.models import Sum, Count
 from django.views.generic import CreateView, ListView
+import pandas as pd
 
 
 class PlayerStatsCreate(CreateView):
@@ -12,15 +12,21 @@ class PlayerStatsCreate(CreateView):
 
 
 def get_player_ranking(year=None):
-    """Get player stats from all seasons or from a certain season."""
+    """Get aggregated player stats."""
     player_stats = PlayerStatistics.objects.all()
+
     if year:
         player_stats = PlayerStatistics.objects.filter(game__season__year=year)
 
-    return player_stats.values('player__id') \
-        .annotate(total_fouls=Sum('q1_foul'),
-                  games_played=Count('q1_foul')) \
-        .order_by('-total_fouls')
+    # Get field names and extend by needed additional fields
+    field_names = list(player_stats.values()[0].keys())
+    field_names.extend(('player__first_name', 'player__last_name', 'player__team'))
+
+    # Calculate aggr stats for each player
+    df = pd.DataFrame(list(player_stats.values(*field_names)))
+    stats = df.groupby(['player_id', 'player__first_name', 'player__last_name', 'player__team'], as_index=False).sum()
+
+    return stats.to_dict('records')
 
 
 class PlayerStatsList(ListView):

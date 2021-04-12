@@ -1,8 +1,30 @@
 {% extends 'mysite/base.html' %}
 {% block content %}
-    <ul>
-        {% for player in player_ranking %}
-            <li>{{ player }}</li>
-        {% endfor %}
-    </ul>
+    <main class="main main--centered container">
+        <div class="grid">
+            <div class="card">
+                <h1>Ranking graczy</h1>
+                <hr>
+            </div>
+
+            <table class="table">
+                <thead class="table__head">
+                <tr>
+                    {% for category in player_ranking.0 %}
+                        <th class="table__header">{{ category }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for player in player_ranking %}
+                    <tr class="table__row">
+                        {% for stat, value in player.items %}
+                            <td class="table__cell">{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
 {% endblock %}
