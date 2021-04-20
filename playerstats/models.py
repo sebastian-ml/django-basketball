@@ -18,7 +18,7 @@ class PlayerStatistics(models.Model):
     shot_1_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ1 T")
     shot_2_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ2 O")
     shot_2_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ2 T")
-    shot_3_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ2 O")
+    shot_3_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ3 O")
     shot_3_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ3 T")
 
     reb_def = models.PositiveIntegerField(default=0, verbose_name="ZB D")
