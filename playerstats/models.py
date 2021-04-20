@@ -3,6 +3,7 @@ from django.db import models
 from mysite.models import Player
 from helpers import get_model_fields_with_verbose_names
 from game.models import Game
+import pandas as pd
 
 
 class PlayerStatistics(models.Model):
@@ -52,13 +53,25 @@ class PlayerStatistics(models.Model):
 
         return stat_fields
 
-    def get_game_statistics(self):
-        """Return player game statistics as a dictionary."""
-        stat_fields = self.get_stats_field_names()
+    @classmethod
+    def get_player_ranking(cls, year=None):
+        """Get aggregated player stats. Return as pandas df"""
+        player_stats = cls.objects.all()
 
-        stats = {}
-        for stat in stat_fields:
-            stats[stat] = getattr(self, stat)
+        if year:
+            player_stats = cls.objects.filter(game__season__year=year)
+
+        # Get field names and extend by needed additional fields
+        field_names = list(player_stats.values()[0].keys())
+        field_names.extend(
+            ('player__first_name', 'player__last_name', 'player__team'))
+
+        # Calculate aggr stats for each player
+        df = pd.DataFrame(list(player_stats.values(*field_names)))
+        stats = df.groupby(
+            ['player_id', 'player__first_name', 'player__last_name',
+             'player__team'], as_index=False
+        ).sum()
 
         return stats
 

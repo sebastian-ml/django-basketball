@@ -12,12 +12,12 @@ urlpatterns = [
          ),
          name='player-stats-add'),
     path('ranking/',
-         views.PlayerStatsList.as_view(
+         views.PlayerStatsRanking.as_view(
              template_name=template_dir + 'player-ranking.html'
          ),
          name='player-ranking'),
     path('ranking/season=<int:year>/',
-         views.PlayerStatsSeasonList.as_view(
+         views.PlayerStatsRanking.as_view(
              template_name=template_dir + 'player-ranking.html'
          ),
          name='player-ranking-by-season'),
