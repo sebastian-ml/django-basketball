@@ -1,6 +1,7 @@
 from django.views.generic import ListView
 from .models import GameStats as GS
 from playerstats.models import PlayerStatistics as PS
+from helpers import get_model_fields_with_verbose_names
 import pandas as pd
 
 
@@ -57,7 +58,7 @@ class GameStatsList(ListView):
         context = super().get_context_data(**kwargs)
 
         game_stats = get_game_stats(season=2021)
-        stats_field_verbose = PS.get_playerstats_names_and_verbose()
+        stats_field_verbose = get_model_fields_with_verbose_names(PS)
         headers = {**stats_field_verbose, 'team': 'Drużyna', 'winner': 'Wygrane', 'by_forfeit': 'W/O'}
         ranking = create_ranking(game_stats)
         ranking.rename(columns=headers, inplace=True)

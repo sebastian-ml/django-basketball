@@ -1,3 +1,4 @@
+from helpers import get_model_fields_with_verbose_names
 from .models import PlayerStatistics
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
@@ -56,7 +57,7 @@ class PlayerStatsList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        playerstats_verbose = PlayerStatistics.get_playerstats_names_and_verbose()
+        playerstats_verbose = get_model_fields_with_verbose_names(PlayerStatistics)
         player_ranking = get_player_ranking()
         player_ranking_cleaned = prepare_player_ranking(player_ranking,
                                                         playerstats_verbose)
@@ -73,7 +74,7 @@ class PlayerStatsSeasonList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        playerstats_verbose = PlayerStatistics.get_playerstats_names_and_verbose()
+        playerstats_verbose = get_model_fields_with_verbose_names(PlayerStatistics)
         player_ranking = get_player_ranking(self.kwargs['year'])
         player_ranking_cleaned = prepare_player_ranking(player_ranking,
                                                         playerstats_verbose)

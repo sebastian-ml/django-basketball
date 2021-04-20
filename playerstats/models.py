@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from mysite.models import Player
+from helpers import get_model_fields_with_verbose_names
 from game.models import Game
 
 
@@ -45,22 +46,11 @@ class PlayerStatistics(models.Model):
     def get_stats_field_names(cls):
         """Return stats related fields as a dict - { field: verbose_name }."""
         non_stats_fields = ['id', 'player_id', 'game_id', 'player', 'game']  # Unnecesary fields
-        all_fields = cls.get_playerstats_names_and_verbose()
+        all_fields = get_model_fields_with_verbose_names(cls)
         stat_fields = {k: v for k, v in all_fields.items()
                        if k not in non_stats_fields}
 
         return stat_fields
-
-    @classmethod
-    def get_playerstats_names_and_verbose(cls):
-        """Return model field names with corresponding verbose names."""
-        model_meta = cls._meta.get_fields()
-        verbose_names = {}
-
-        for field in model_meta:
-            verbose_names[field.name] = field.verbose_name
-
-        return verbose_names
 
     def get_game_statistics(self):
         """Return player game statistics as a dictionary."""
