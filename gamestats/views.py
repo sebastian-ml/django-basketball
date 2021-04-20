@@ -1,7 +1,7 @@
 from django.views.generic import ListView
 from .models import GameStats as GS
 from playerstats.models import PlayerStatistics as PS
-from helpers import get_model_fields_with_verbose_names
+from helpers import get_model_fields_meta_info, flatten_dict
 import pandas as pd
 
 
@@ -44,7 +44,8 @@ class GameStatsList(ListView):
         season = self.kwargs.get('year', None)
 
         game_stats = GS.get_game_stats(season=season)
-        stats_field_verbose = get_model_fields_with_verbose_names(PS)
+        stats_field_verbose = get_model_fields_meta_info(PS, 'verbose_name')
+        stats_field_verbose = flatten_dict(stats_field_verbose, 'verbose_name')
 
         ranking = create_ranking(game_stats)
         ranking.rename(columns=stats_field_verbose, inplace=True)

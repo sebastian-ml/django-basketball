@@ -1,4 +1,4 @@
-from helpers import get_model_fields_with_verbose_names
+from helpers import get_model_fields_meta_info, flatten_dict
 from .models import PlayerStatistics as PS
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
@@ -41,7 +41,8 @@ class PlayerStatsRanking(ListView):
         season = self.kwargs.get('year', None)
         player_ranking = PS.get_player_ranking(season)
 
-        playerstats_verbose = get_model_fields_with_verbose_names(PS)
+        playerstats_verbose = get_model_fields_meta_info(PS, 'verbose_name')
+        playerstats_verbose = flatten_dict(playerstats_verbose, 'verbose_name')
         player_ranking_cleaned = clear_player_ranking(player_ranking,
                                                       playerstats_verbose)
 
