@@ -5,46 +5,29 @@ from helpers import get_model_fields_with_verbose_names
 import pandas as pd
 
 
-def get_game_stats(season=None, game_done=True, game_done_stats_amount=4):
-    """Return game stats for all seasons or for the specific season.
-
-    Keyword arguments:
-    season -- the season year, e.g. 2021
-    game_done -- the game status - if True get only games that has all needed stats
-    game_done_stats_amount -- the required number of stats to mark the game as done
-    """
-    game_stats = GS.objects.all()
-
-    if season is not None:
-        game_stats = GS.objects.filter(game__season__year=season)
-
-    if game_done:
-        done_games_ids = [game.id for game in game_stats if game.game_is_over(game_done_stats_amount)]
-        return game_stats.filter(id__in=done_games_ids)
-    else:
-        return game_stats
-
-
 def create_ranking(game_stats):
     """
-    Calculate total points from the given game stats. Sort by number of winds.
+    Calculate total points from the given game stats. Sort by number of wins.
     Return as a pandas df, each row - 1 team.
     """
     ranking = []
 
     for game_stat in game_stats:
-        game_team_stats = {'team': game_stat.team.name,
-                           'winner': game_stat.is_winner,
-                           'by_forfeit': game_stat.game_ended_by_forfeit}
+        game_team_stats = {'Drużyna': game_stat.team.name,
+                           'Wygrane': game_stat.is_winner,
+                           'Zagrane mecze': 1,
+                           'W/O W': game_stat.is_forfeit_winner,
+                           'W/O P': game_stat.is_forfeit_looser}
 
-        game_total_team_pts = game_stat.get_team_stats()
+        game_total_team_pts = game_stat.get_game_team_stats()
         game_team_stats.update(game_total_team_pts)
 
         ranking.append(game_team_stats)
 
     df = pd.DataFrame(ranking)
-    df = df.groupby(['team'], as_index=False).sum()
-    df.sort_values(by='winner', inplace=True)
+    df = df.groupby(['Drużyna'], as_index=False).sum()
+    df.sort_values(by='Wygrane', ascending=False, inplace=True)
+    df.insert(0, '#', range(1, len(df.index) + 1))
 
     return df
 
@@ -57,11 +40,14 @@ class GameStatsList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        game_stats = get_game_stats(season=2021)
+        # Create general team ranking or for a certain season
+        season = self.kwargs.get('year', None)
+
+        game_stats = GS.get_game_stats(season=season)
         stats_field_verbose = get_model_fields_with_verbose_names(PS)
-        headers = {**stats_field_verbose, 'team': 'Drużyna', 'winner': 'Wygrane', 'by_forfeit': 'W/O'}
+
         ranking = create_ranking(game_stats)
-        ranking.rename(columns=headers, inplace=True)
+        ranking.rename(columns=stats_field_verbose, inplace=True)
 
         context['ranking'] = ranking.to_dict('records')
 
