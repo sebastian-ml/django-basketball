@@ -41,6 +41,37 @@ class PlayerStatistics(models.Model):
     )
     time = models.PositiveIntegerField(default=0)
 
+    @classmethod
+    def get_stats_field_names(cls):
+        """Return stats related fields as a dict - { field: verbose_name }."""
+        non_stats_fields = ['id', 'player_id', 'game_id', 'player', 'game']  # Unnecesary fields
+        all_fields = cls.get_playerstats_names_and_verbose()
+        stat_fields = {k: v for k, v in all_fields.items()
+                       if k not in non_stats_fields}
+
+        return stat_fields
+
+    @classmethod
+    def get_playerstats_names_and_verbose(cls):
+        """Return model field names with corresponding verbose names."""
+        model_meta = cls._meta.get_fields()
+        verbose_names = {}
+
+        for field in model_meta:
+            verbose_names[field.name] = field.verbose_name
+
+        return verbose_names
+
+    def get_game_statistics(self):
+        """Return player game statistics as a dictionary."""
+        stat_fields = self.get_stats_field_names()
+
+        stats = {}
+        for stat in stat_fields:
+            stats[stat] = getattr(self, stat)
+
+        return stats
+
     @property
     def get_total_points(self):
         """Get total player score for the specific game."""

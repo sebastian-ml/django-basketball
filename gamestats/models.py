@@ -57,6 +57,9 @@ class GameStats(models.Model):
         expected_stats_count -- number of unique player stats related to the game.
         E.g. 4 means that the game must have exactly 4 player stats.
         """
+        if self.game_ended_by_forfeit:
+            return True
+
         assigned_player_stats = PS.objects.filter(game=self.game).count()
         assigned_player_stats_team = PS.objects \
             .filter(game=self.game, player__team=self.team).count()
@@ -66,13 +69,26 @@ class GameStats(models.Model):
                 (assigned_player_stats_team == expected_stats_count / 2)
         )
 
-        return game_has_required_stats or self.game_ended_by_forfeit
+        return game_has_required_stats
+
+    def get_team_stats(self):
+        """Return aggreated statistics for the specific game for the specific team."""
+        stats_field_names = PS.get_stats_field_names()
+        player_stats = PS.objects.filter(game=self.game, player__team=self.team)
+
+        team_game_stats = dict.fromkeys(stats_field_names, 0)
+
+        for stat in stats_field_names:
+            for player in player_stats:
+                team_game_stats[stat] += getattr(player, stat)
+
+        return team_game_stats
 
     def clean(self):
         # Chosen team must be same as team1 or team2 from the desired game
         if self.team not in [self.game.team_1, self.game.team_2]:
             raise ValidationError(
-                f'Dla wybranej gry można przypisać statystyki drużyny '
+                f'Dla wybranej gry można przypisać jedynie statystyki drużyny '
                 f'której wybrany mecz dotyczy - {self.game.team_1} lub {self.game.team_2}'
             )
 

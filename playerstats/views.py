@@ -11,17 +11,6 @@ class PlayerStatsCreate(CreateView):
     success_url = reverse_lazy('home:player-stats-add')
 
 
-def get_playerstats_names_and_verbose():
-    """Return PlayerStatistics field names with corresponding verbose names."""
-    model_meta = PlayerStatistics._meta.get_fields()
-    verbose_names = {}
-
-    for field in model_meta:
-        verbose_names[field.name] = field.verbose_name
-
-    return verbose_names
-
-
 def get_player_ranking(year=None):
     """Get aggregated player stats. Return as pandas df"""
     player_stats = PlayerStatistics.objects.all()
@@ -67,7 +56,7 @@ class PlayerStatsList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        playerstats_verbose = get_playerstats_names_and_verbose()
+        playerstats_verbose = PlayerStatistics.get_playerstats_names_and_verbose()
         player_ranking = get_player_ranking()
         player_ranking_cleaned = prepare_player_ranking(player_ranking,
                                                         playerstats_verbose)
@@ -84,7 +73,7 @@ class PlayerStatsSeasonList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        playerstats_verbose = get_playerstats_names_and_verbose()
+        playerstats_verbose = PlayerStatistics.get_playerstats_names_and_verbose()
         player_ranking = get_player_ranking(self.kwargs['year'])
         player_ranking_cleaned = prepare_player_ranking(player_ranking,
                                                         playerstats_verbose)

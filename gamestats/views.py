@@ -1,5 +1,7 @@
 from django.views.generic import ListView
 from .models import GameStats as GS
+from playerstats.models import PlayerStatistics as PS
+import pandas as pd
 
 
 def get_game_stats(season=None, game_done=True, game_done_stats_amount=4):
@@ -10,9 +12,9 @@ def get_game_stats(season=None, game_done=True, game_done_stats_amount=4):
     game_done -- the game status - if True get only games that has all needed stats
     game_done_stats_amount -- the required number of stats to mark the game as done
     """
-    if season is None:
-        game_stats = GS.objects.all()
-    else:
+    game_stats = GS.objects.all()
+
+    if season is not None:
         game_stats = GS.objects.filter(game__season__year=season)
 
     if game_done:
@@ -22,39 +24,28 @@ def get_game_stats(season=None, game_done=True, game_done_stats_amount=4):
         return game_stats
 
 
-def get_team_names(game_stats):
-    """Return a queryset with distinct team names from the given game_stats."""
-    return game_stats \
-        .values_list('team', flat=True) \
-        .distinct() \
-        .order_by()
+def create_ranking(game_stats):
+    """
+    Calculate total points from the given game stats. Sort by number of winds.
+    Return as a pandas df, each row - 1 team.
+    """
+    ranking = []
 
+    for game_stat in game_stats:
+        game_team_stats = {'team': game_stat.team.name,
+                           'winner': game_stat.is_winner,
+                           'by_forfeit': game_stat.game_ended_by_forfeit}
 
-def create_team_ranking(game_stats):
-    """Create team ranking from the given game stats."""
-    stats = ['wins', 'losses']
-    teams = get_team_names(game_stats)
+        game_total_team_pts = game_stat.get_team_stats()
+        game_team_stats.update(game_total_team_pts)
 
-    '''
-    Create an empty dict for all teams. Example: ranking = {
-    'team1': {
-        'wins': 2,
-        'losses': 3,
-    }
-    '''
-    ranking = dict.fromkeys(teams, {})
-    for team, v in ranking.items():
-        ranking[team] = dict.fromkeys(stats, 0)
+        ranking.append(game_team_stats)
 
-    for teamstats in game_stats:
-        team = teamstats.team.name
+    df = pd.DataFrame(ranking)
+    df = df.groupby(['team'], as_index=False).sum()
+    df.sort_values(by='winner', inplace=True)
 
-        if teamstats.is_winner:
-            ranking[team]['wins'] += 1
-        if not teamstats.is_winner:
-            ranking[team]['losses'] += 1
-
-    return ranking
+    return df
 
 
 class GameStatsList(ListView):
@@ -66,6 +57,11 @@ class GameStatsList(ListView):
         context = super().get_context_data(**kwargs)
 
         game_stats = get_game_stats(season=2021)
-        context['test'] = create_team_ranking(game_stats)
+        stats_field_verbose = PS.get_playerstats_names_and_verbose()
+        headers = {**stats_field_verbose, 'team': 'Drużyna', 'winner': 'Wygrane', 'by_forfeit': 'W/O'}
+        ranking = create_ranking(game_stats)
+        ranking.rename(columns=headers, inplace=True)
+
+        context['ranking'] = ranking.to_dict('records')
 
         return context
