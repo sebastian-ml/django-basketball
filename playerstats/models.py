@@ -14,24 +14,25 @@ class PlayerStatistics(models.Model):
     """
     MAX_PLAYER_STATS_PER_GAME = 4  # One game can have max 4 player statistics.
 
-    shot_1_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ1 O")
-    shot_1_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ1 T")
-    shot_2_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ2 O")
-    shot_2_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ2 T")
-    shot_3_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ3 O")
-    shot_3_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ3 T")
+    shot_1_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ1 O", help_text='Rzuty celne za 1 pkt')
+    shot_1_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ1 T", help_text='Rzuty ogółem za 1 pkt')
+    shot_2_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ2 O", help_text='Rzuty celne za 2 pkt')
+    shot_2_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ2 T", help_text='Rzuty ogółem za 2 pkt')
+    shot_3_pts_ok = models.PositiveIntegerField(default=0, verbose_name="RZ3 O", help_text='Rzuty celne za 3 pkt')
+    shot_3_pts_total = models.PositiveIntegerField(default=0, verbose_name="RZ3 T", help_text='Rzuty ogółem za 3 pkt')
 
-    reb_def = models.PositiveIntegerField(default=0, verbose_name="ZB D")
-    reb_off = models.PositiveIntegerField(default=0, verbose_name="ZB O")
-    ast = models.PositiveIntegerField(default=0, verbose_name="AS")
-    stl = models.PositiveIntegerField(default=0, verbose_name="PR")
-    blck = models.PositiveIntegerField(default=0, verbose_name="BL")
-    ball_loos = models.PositiveIntegerField(default=0, verbose_name="ST")
-    foul_def = models.PositiveIntegerField(default=0, verbose_name="FA DF")
-    foul_off = models.PositiveIntegerField(default=0, verbose_name="FA OF")
-    foul_unsport = models.PositiveIntegerField(default=0, verbose_name="FA N")
-    foul_tech = models.PositiveIntegerField(default=0, verbose_name="FA T")
-    foul_disq = models.PositiveIntegerField(default=0, verbose_name="FA D")
+    reb_def = models.PositiveIntegerField(default=0, verbose_name="ZB D", help_text='Zbiórki obrona')
+    reb_off = models.PositiveIntegerField(default=0, verbose_name="ZB O", help_text='Zbiórki atak')
+    ast = models.PositiveIntegerField(default=0, verbose_name="AS", help_text='Asysty')
+    stl = models.PositiveIntegerField(default=0, verbose_name="PR", help_text='Przechwyty')
+    blck = models.PositiveIntegerField(default=0, verbose_name="BL", help_text='Bloki')
+    ball_loos = models.PositiveIntegerField(default=0, verbose_name="ST", help_text='Straty')
+    foul_def = models.PositiveIntegerField(default=0, verbose_name="FA DF", help_text='Faule defensywne')
+    foul_off = models.PositiveIntegerField(default=0, verbose_name="FA OF", help_text='Faule ofensywne')
+    foul_unsport = models.PositiveIntegerField(default=0, verbose_name="FA N", help_text='Faule niepsortowe')
+    foul_tech = models.PositiveIntegerField(default=0, verbose_name="FA T", help_text='Faule techniczne')
+    foul_disq = models.PositiveIntegerField(default=0, verbose_name="FA D", help_text='Faule dyskwalifikujące')
+    time = models.PositiveIntegerField(default=0, verbose_name='T', help_text='Czas na boisku')
 
     player = models.ForeignKey(
         Player,
@@ -41,7 +42,6 @@ class PlayerStatistics(models.Model):
         Game,
         on_delete=models.CASCADE
     )
-    time = models.PositiveIntegerField(default=0)
 
     @classmethod
     def get_stats_field_names(cls):
