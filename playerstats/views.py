@@ -1,4 +1,4 @@
-from helpers import get_model_fields_meta_info, flatten_dict
+from helpers import flatten_dict, get_stats_fields_meta
 from .models import PlayerStatistics as PS
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
@@ -15,10 +15,10 @@ def clear_player_ranking(ranking, colnames):
 
     all_cols = {**colnames,
                 'player__first_name': 'Imię', 'player__last_name': 'Nazwisko',
-                'player__team': 'Drużyna', 'time': 'Czas', 'player_id': '#'}
+                'player__team': 'Drużyna', 'time': 'T', 'player_id': '#'}
 
     ranking.rename(columns=all_cols, inplace=True)
-    ranking.drop(columns=['game_id', 'ID'], inplace=True)
+    ranking.drop(columns=['game_id', 'id'], inplace=True)
 
     return ranking
 
@@ -37,15 +37,17 @@ class PlayerStatsRanking(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        stats_fields_meta = get_stats_fields_meta(PS)
+        stats_fields_verbose_names = flatten_dict(stats_fields_meta,
+                                                  'verbose_name')
+
         # Create general player ranking or for some season
         season = self.kwargs.get('year', None)
         player_ranking = PS.get_player_ranking(season)
-
-        playerstats_verbose = get_model_fields_meta_info(PS, 'verbose_name')
-        playerstats_verbose = flatten_dict(playerstats_verbose, 'verbose_name')
         player_ranking_cleaned = clear_player_ranking(player_ranking,
-                                                      playerstats_verbose)
+                                                      stats_fields_verbose_names)
 
         context['player_ranking'] = player_ranking_cleaned.to_dict('records')
+        context['legend'] = stats_fields_meta
 
         return context

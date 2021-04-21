@@ -1,7 +1,7 @@
 from django.views.generic import ListView
 from .models import GameStats as GS
 from playerstats.models import PlayerStatistics as PS
-from helpers import get_model_fields_meta_info, flatten_dict
+from helpers import flatten_dict, get_stats_fields_meta
 import pandas as pd
 
 
@@ -40,16 +40,18 @@ class GameStatsList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        stats_fields_meta = get_stats_fields_meta(PS)
+        stats_fields_verbose_names = flatten_dict(stats_fields_meta,
+                                                  'verbose_name')
+
         # Create general team ranking or for a certain season
         season = self.kwargs.get('year', None)
-
         game_stats = GS.get_game_stats(season=season)
-        stats_field_verbose = get_model_fields_meta_info(PS, 'verbose_name')
-        stats_field_verbose = flatten_dict(stats_field_verbose, 'verbose_name')
 
         ranking = create_ranking(game_stats)
-        ranking.rename(columns=stats_field_verbose, inplace=True)
+        ranking.rename(columns=stats_fields_verbose_names, inplace=True)
 
         context['ranking'] = ranking.to_dict('records')
+        context['legend'] = stats_fields_meta
 
         return context

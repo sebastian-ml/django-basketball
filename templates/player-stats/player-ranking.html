@@ -3,13 +3,20 @@
     <main class="main main--centered container">
         <div class="grid">
             <div class="card">
-                <h1>Ranking graczy</h1>
-                <hr>
-                <label for="seasons">Sezon</label>
-                <select name="seasons" id="seasons">
-                    <option>20</option>
-                    <option>21</option>
-                </select>
+                <header class="card__header">
+                    <h1>Ranking graczy</h1>
+                    <hr>
+                </header>
+                <section class="card__body">
+                    <label for="seasons">Sezon</label>
+                    <select name="seasons" id="seasons">
+                        <option>20</option>
+                        <option>21</option>
+                    </select>
+
+                    <h2>Legenda</h2>
+                    {% include 'mysite/_statistics_legend.html' with legend=legend %}
+                </section>
             </div>
 
             <table class="table">

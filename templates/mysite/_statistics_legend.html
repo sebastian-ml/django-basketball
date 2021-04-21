@@ -1,0 +1,8 @@
+<dl class="dl">
+    {% for meta_info in legend.values %}
+        <div class="dl__cell">
+            <dt class="dl__term">{{ meta_info.verbose_name }}</dt>
+            <dd class="dl__description">{{ meta_info.help_text }}</dd>
+        </div>
+    {% endfor %}
+</dl>
