@@ -385,7 +385,6 @@ h3,
 h4,
 h5 {
   color: #000;
-  margin-top: 0;
   font-weight: normal;
 }
 
@@ -535,6 +534,25 @@ hr {
   height: 2px;
   background-color: #d4d4d4;
   border: none;
+}
+
+.dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-gap: 1em;
+  flex-wrap: wrap;
+}
+.dl__cell {
+  display: flex;
+  font-size: 0.9rem;
+}
+.dl__term {
+  font-weight: bold;
+}
+.dl__description {
+  margin-left: 0.5em;
+  color: #b0b0b0;
+  white-space: nowrap;
 }
 
 select {
