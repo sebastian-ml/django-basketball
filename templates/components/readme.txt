@@ -1,0 +1,1 @@
+This folder contains html components which can be shared through subpages.

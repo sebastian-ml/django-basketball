@@ -3,22 +3,22 @@ from . import views
 
 
 app_name = 'playerstats'
-template_dir = 'player-stats/'
+template_dir = 'playerstats/'
 
 urlpatterns = [
     path('statistics/add/',
          views.PlayerStatsCreate.as_view(
-             template_name=template_dir + 'player-statistics-add.html'
+             template_name=template_dir + 'add.html'
          ),
-         name='player-stats-add'),
+         name='add'),
     path('ranking/',
          views.PlayerStatsRanking.as_view(
-             template_name=template_dir + 'player-ranking.html'
+             template_name=template_dir + 'ranking.html'
          ),
-         name='player-ranking'),
+         name='ranking'),
     path('ranking/season=<int:year>/',
          views.PlayerStatsRanking.as_view(
-             template_name=template_dir + 'player-ranking.html'
+             template_name=template_dir + 'ranking.html'
          ),
-         name='player-ranking-by-season'),
+         name='ranking-by-season'),
 ]

@@ -8,12 +8,12 @@ template_dir = 'gamestats/'
 urlpatterns = [
     path('ranking/',
          views.GameStatsList.as_view(
-             template_name=template_dir + 'gamestats-ranking.html'
+             template_name=template_dir + 'ranking.html'
          ),
          name='ranking'),
     path('ranking/season=<int:year>/',
          views.GameStatsList.as_view(
-             template_name=template_dir + 'gamestats-ranking.html'
+             template_name=template_dir + 'ranking.html'
          ),
          name='ranking-by-season'),
 ]

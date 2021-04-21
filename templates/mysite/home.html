@@ -1,4 +1,4 @@
-{% extends 'mysite/base.html' %}
+{% extends 'layout/base.html' %}
 {% block content %}
     <main class="main main--centered container">
         <div class="grid grid--home">
@@ -16,7 +16,7 @@
                 <hr>
             </div>
 
-            {% include 'mysite/_game-schedule.html' with games=games %}
+            {% include 'components/_game-schedule.html' with games=games %}
         </div>
     </main>
 {% endblock %}

@@ -27,7 +27,7 @@ class PlayerStatsCreate(CreateView):
     """Create player statistics which belongs to the certain game."""
     model = PS
     fields = '__all__'
-    success_url = reverse_lazy('home:player-stats-add')
+    success_url = reverse_lazy('home:add')
 
 
 class PlayerStatsRanking(ListView):

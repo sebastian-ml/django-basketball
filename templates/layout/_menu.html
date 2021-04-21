@@ -4,14 +4,14 @@
         <li class="menu__item"><a class="menu__link">Tabela</a>
             <ul class="menu__dropdown">
                 <li class="menu__item"><a href="{% url 'gamestats:ranking' %}" class="menu__link">Drużyny</a></li>
-                <li class="menu__item"><a href="{% url 'playerstats:player-ranking' %}" class="menu__link">Zawodnicy</a></li>
+                <li class="menu__item"><a href="{% url 'playerstats:ranking' %}" class="menu__link">Zawodnicy</a></li>
             </ul>
         </li>
         <li class="menu__item"><a class="menu__link">Statystyki</a>
             <ul class="menu__dropdown">
                 <li class="menu__item"><a class="menu__link">Zawodnicy</a>
                     <ul class="menu__sublist">
-                        <li class="menu__item"><a href="{% url 'playerstats:player-stats-add' %}"class="menu__link">Dodaj</a></li>
+                        <li class="menu__item"><a href="{% url 'playerstats:add' %}"class="menu__link">Dodaj</a></li>
                         <li class="menu__item"><a class="menu__link">Edytuj</a></li>
                     </ul>
                 </li>
@@ -19,8 +19,8 @@
         </li>
         <li class="menu__item"><a class="menu__link">Mecze</a>
             <ul class="menu__dropdown">
-                <li class="menu__item"><a href="{% url 'game:game-schedule' %}" class="menu__link">Terminarz</a></li>
-                <li class="menu__item"><a href="{% url 'game:game-add' %}" class="menu__link">Dodaj</a></li>
+                <li class="menu__item"><a href="{% url 'game:schedule' %}" class="menu__link">Terminarz</a></li>
+                <li class="menu__item"><a href="{% url 'game:add' %}" class="menu__link">Dodaj</a></li>
             </ul>
         </li>
     </ul>

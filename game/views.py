@@ -6,7 +6,7 @@ from .models import Game
 class GameCreate(CreateView):
     model = Game
     fields = ['date', 'team_1', 'team_2', 'season']
-    success_url = reverse_lazy('game:game-add')
+    success_url = reverse_lazy('game:add')
 
 
 class GameSchedule(ListView):

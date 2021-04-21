@@ -1,10 +1,10 @@
-{% extends 'mysite/base.html' %}
+{% extends 'layout/base.html' %}
 {% block content %}
     <main class="main main--centered container">
         <div class="grid">
             <div class="card">
                 <header class="card__header">
-                    <h1>Sezon 2021 statystyki</h1>
+                    <h1>Ranking graczy</h1>
                     <hr>
                 </header>
                 <section class="card__body">
@@ -15,22 +15,22 @@
                     </select>
 
                     <h2>Legenda</h2>
-                    {% include 'mysite/_statistics_legend.html' with legend=legend %}
+                    {% include 'components/_statistics_legend.html' with legend=legend %}
                 </section>
             </div>
 
             <table class="table">
                 <thead class="table__head">
                 <tr>
-                    {% for header in ranking.0 %}
-                        <th class="table__header">{{ header }}</th>
+                    {% for category in player_ranking.0 %}
+                        <th class="table__header">{{ category }}</th>
                     {% endfor %}
                 </tr>
                 </thead>
                 <tbody>
-                {% for row in ranking %}
+                {% for player in player_ranking %}
                     <tr class="table__row">
-                        {% for thead, value in row.items %}
+                        {% for stat, value in player.items %}
                             <td class="table__cell">{{ value }}</td>
                         {% endfor %}
                     </tr>

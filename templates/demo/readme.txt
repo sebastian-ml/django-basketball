@@ -1,0 +1,1 @@
+This folder contains demo html snippets with dummy data.
