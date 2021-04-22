@@ -1,0 +1,43 @@
+<form method="post" class="form">
+    {% csrf_token %}
+    <fieldset class="form__fieldset">
+        <legend class="form__legend">Legend</legend>
+        <div class="form__row">
+            <label class="form__label" for="name">Name: </label>
+            <input class="form__input" type="text" id="name">
+        </div>
+    </fieldset>
+    <fieldset class="form__fieldset">
+        <legend class="form__legend">Legend 2</legend>
+        <div class="form__row">
+            <label class="form__label" for="name2">Name: </label>
+            <input class="form__input" type="text" id="name2">
+        </div>
+        <div class="form__row">
+            <label class="form__label" for="name3">Name: </label>
+            <input class="form__input" type="text" id="name3">
+        </div>
+        <div class="form__row">
+            <label class="form__label" for="name4">Name: </label>
+            <input class="form__input" type="text" id="name4">
+        </div>
+    </fieldset>
+    <fieldset class="form__fieldset">
+        <legend class="form__legend">Legend 3</legend>
+        <div class="form__row">
+            <label class="form__label" for="name5">Name: </label>
+            <input class="form__input" type="text" id="name5">
+        </div>
+        <div class="form__row">
+            <label class="form__label" for="name6">Name: </label>
+            <input class="form__input" type="text" id="name6">
+        </div>
+        <div class="form__row">
+            <label class="form__label" for="name7">Name: </label>
+            <input class="form__input" type="text" id="name7">
+        </div>
+    </fieldset>
+    <div class="form__row">
+        <button class="btn form__btn" type="submit">Dodaj</button>
+    </div>
+</form>

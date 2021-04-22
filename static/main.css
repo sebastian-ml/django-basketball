@@ -483,6 +483,19 @@ h5 {
   transform: translateX(75%);
 }
 
+.btn {
+  border-radius: 7px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: #2776f6;
+  color: #fff;
+  padding: 0.4em 0.75em;
+  transition: background-color 0.2s ease;
+}
+.btn:hover {
+  background-color: #2880ff;
+}
+
 .card {
   -webkit-box-shadow: 3px 3px 12px 1px #cecece;
   box-shadow: 3px 3px 12px 1px #cecece;
@@ -532,6 +545,40 @@ h5 {
 }
 .dropdown__link:hover {
   color: #fff;
+}
+
+.form {
+  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
+  box-shadow: 3px 3px 12px 1px #cecece;
+  border-radius: 7px;
+  background-color: #fff;
+  padding: 2rem;
+}
+.form__row {
+  margin: 0.5em 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form__btn {
+  width: 100%;
+}
+.form__input {
+  border-radius: 7px;
+  padding: 0.5em;
+  border: 1px solid #b0b0b0;
+}
+.form__input:focus {
+  box-shadow: 0 0 5px 3px #e2e2e2 inset;
+}
+.form label {
+  color: #b0b0b0;
+  margin-right: 0.75em;
+}
+.form__fieldset {
+  padding: 0;
+  border: none;
+  margin-bottom: 0.75em;
 }
 
 hr {

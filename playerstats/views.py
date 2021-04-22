@@ -2,6 +2,7 @@ from helpers import flatten_dict, get_stats_fields_meta
 from .models import PlayerStatistics as PS
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
+from .forms import PlayerStatisticsForm
 
 
 def clear_player_ranking(ranking, colnames):
@@ -25,8 +26,7 @@ def clear_player_ranking(ranking, colnames):
 
 class PlayerStatsCreate(CreateView):
     """Create player statistics which belongs to the certain game."""
-    model = PS
-    fields = '__all__'
+    form_class = PlayerStatisticsForm
     success_url = reverse_lazy('home:add')
 
 

@@ -36,11 +36,13 @@ class PlayerStatistics(models.Model):
 
     player = models.ForeignKey(
         Player,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        help_text='Gracz'
     )
     game = models.ForeignKey(
         Game,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        help_text='Mecz'
     )
 
     @classmethod

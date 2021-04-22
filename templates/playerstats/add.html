@@ -1,8 +1,6 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Dodaj</button>
-    </form>
+    <main class="main main--centered container">
+        {% include 'components/_statistics_form.html' %}
+    </main>
 {% endblock %}

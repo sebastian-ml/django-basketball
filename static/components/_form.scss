@@ -1,0 +1,36 @@
+.form {
+  @include boxshadow;
+  border-radius: $border-radius;
+  background-color: #fff;
+  padding: 2rem;
+
+  &__row {
+    margin: 0.5em 0;
+    @include flexbox($justifyContent:space-between, $alignItems:center);
+  }
+
+  &__btn {
+    width: 100%;
+  }
+
+  &__input {
+    border-radius: $border-radius;
+    padding: 0.5em;
+    border: 1px solid $color-grey;
+
+    &:focus {
+      box-shadow: 0 0 5px 3px #e2e2e2 inset;
+    }
+  }
+
+   label {
+    color: $color-grey;
+    margin-right: 0.75em;
+  }
+
+  &__fieldset {
+    padding: 0;
+    border: none;
+    margin-bottom: 0.75em;
+  }
+}

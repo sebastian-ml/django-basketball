@@ -1,0 +1,104 @@
+<form method="post" class="form">
+    {% csrf_token %}
+    <fieldset class="form__fieldset">
+        <div class="form__row">
+            {{ form.game.label_tag }}
+            {{ form.game }}
+        </div>
+        <div class="form__row">
+            {{ form.player.label_tag }}
+            {{ form.player }}
+        </div>
+    </fieldset>
+    <fieldset class="form__fieldset">
+        <legend class="form__legend">Rzuty</legend>
+        <hr>
+        <div class="form__row">
+            {{ form.shot_1_pts_ok.label_tag }}
+            {{ form.shot_1_pts_ok }}
+        </div>
+        <div class="form__row">
+            {{ form.shot_1_pts_total.label_tag }}
+            {{ form.shot_1_pts_total }}
+        </div>
+        <div class="form__row">
+            {{ form.shot_2_pts_ok.label_tag }}
+            {{ form.shot_2_pts_ok }}
+        </div>
+        <div class="form__row">
+            {{ form.shot_2_pts_total.label_tag }}
+            {{ form.shot_2_pts_total }}
+        </div>
+        <div class="form__row">
+            {{ form.shot_3_pts_ok.label_tag }}
+            {{ form.shot_3_pts_ok }}
+        </div>
+        <div class="form__row">
+            {{ form.shot_3_pts_total.label_tag }}
+            {{ form.shot_3_pts_total }}
+        </div>
+    </fieldset>
+    <fieldset class="form__fieldset">
+        <legend class="form__legend">Zbiórki</legend>
+        <hr>
+        <div class="form__row">
+            {{ form.reb_def.label_tag }}
+            {{ form.reb_def }}
+        </div>
+        <div class="form__row">
+            {{ form.reb_off.label_tag }}
+            {{ form.reb_off }}
+        </div>
+    </fieldset>
+    <fieldset class="form__fieldset">
+        <legend class="form__legend">Faule</legend>
+        <hr>
+        <div class="form__row">
+            {{ form.foul_def.label_tag }}
+            {{ form.foul_def }}
+        </div>
+        <div class="form__row">
+            {{ form.foul_off.label_tag }}
+            {{ form.foul_off }}
+        </div>
+        <div class="form__row">
+            {{ form.foul_unsport.label_tag }}
+            {{ form.foul_unsport }}
+        </div>
+        <div class="form__row">
+            {{ form.foul_tech.label_tag }}
+            {{ form.foul_tech }}
+        </div>
+        <div class="form__row">
+            {{ form.foul_disq.label_tag }}
+            {{ form.foul_disq }}
+        </div>
+    </fieldset>
+    <fieldset class="form__fieldset">
+        <legend class="form__legend">Pozostałe statystyki</legend>
+        <hr>
+        <div class="form__row">
+            {{ form.ast.label_tag }}
+            {{ form.ast }}
+        </div>
+        <div class="form__row">
+            {{ form.stl.label_tag }}
+            {{ form.stl }}
+        </div>
+        <div class="form__row">
+            {{ form.blck.label_tag }}
+            {{ form.blck }}
+        </div>
+        <div class="form__row">
+            {{ form.ball_loos.label_tag }}
+            {{ form.ball_loos }}
+        </div>
+        <div class="form__row">
+            {{ form.time.label_tag }}
+            {{ form.time }}
+        </div>
+    </fieldset>
+    <div class="form__row">
+        <button class="btn form__btn" type="submit">Dodaj</button>
+    </div>
+</form>
