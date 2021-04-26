@@ -16,7 +16,8 @@ def clear_player_ranking(ranking, colnames):
 
     all_cols = {**colnames,
                 'player__first_name': 'Imię', 'player__last_name': 'Nazwisko',
-                'player__team': 'Drużyna', 'time': 'T', 'player_id': '#'}
+                'player__team': 'Drużyna', 'time': 'T', 'player_id': '#',
+                'game_counter': 'Mecze'}
 
     ranking.rename(columns=all_cols, inplace=True)
     ranking.drop(columns=['game_id', 'id'], inplace=True)

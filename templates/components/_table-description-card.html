@@ -1,0 +1,17 @@
+<div class="card">
+    <header class="card__header">
+        <h1>Ranking {{ type }} <span id="current-season-choice"></span></h1>
+        <hr>
+    </header>
+    <section class="card__body">
+        <label for="seasons">Sezon</label>
+        <select name="seasons" id="seasons">
+            <option selected>Wszystkie</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+        </select>
+
+        <h2>Legenda</h2>
+        {% include 'components/_statistics_legend.html' with legend=legend %}
+    </section>
+</div>

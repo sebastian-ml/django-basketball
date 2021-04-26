@@ -14,6 +14,7 @@
     font-weight: normal;
     text-align: left;
     color: $color-grey;
+    white-space: nowrap;
   }
 
   &__header, &__cell {

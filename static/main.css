@@ -627,6 +627,7 @@ select {
   font-weight: normal;
   text-align: left;
   color: #b0b0b0;
+  white-space: nowrap;
 }
 .table__header, .table__cell {
   height: 50px;

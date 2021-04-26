@@ -71,6 +71,7 @@ class PlayerStatistics(models.Model):
 
         # Calculate aggr stats for each player
         df = pd.DataFrame(list(player_stats.values(*field_names)))
+        df['game_counter'] = 1
         stats = df.groupby(
             ['player_id', 'player__first_name', 'player__last_name',
              'player__team'], as_index=False

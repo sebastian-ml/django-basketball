@@ -14,8 +14,9 @@ def create_ranking(game_stats):
 
     for game_stat in game_stats:
         game_team_stats = {'Drużyna': game_stat.team.name,
+                           'Mecze': 1,
                            'Wygrane': game_stat.is_winner,
-                           'Zagrane mecze': 1,
+                           'Przegrane': not game_stat.is_winner,
                            'W/O W': game_stat.is_forfeit_winner,
                            'W/O P': game_stat.is_forfeit_looser}
 
@@ -28,6 +29,9 @@ def create_ranking(game_stats):
     df = df.groupby(['Drużyna'], as_index=False).sum()
     df.sort_values(by='Wygrane', ascending=False, inplace=True)
     df.insert(0, '#', range(1, len(df.index) + 1))
+
+    total_points = df['Wygrane'] * 2 + df['Przegrane'] - df['W/O P']
+    df.insert(1, 'PKT', total_points)
 
     return df
 
