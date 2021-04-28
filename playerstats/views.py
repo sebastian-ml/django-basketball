@@ -30,7 +30,7 @@ def clear_player_ranking(ranking, colnames):
 class PlayerStatsCreate(CreateView):
     """Create player statistics which belongs to the certain game."""
     form_class = PlayerStatisticsForm
-    success_url = reverse_lazy('home:add')
+    success_url = reverse_lazy('playerstats:add')
 
 
 class PlayerStatsRanking(FormMixin, ListView):

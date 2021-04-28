@@ -29,7 +29,7 @@ class PlayerStatistics(models.Model):
     ball_loos = models.PositiveIntegerField(default=0, verbose_name="ST", help_text='Straty')
     foul_def = models.PositiveIntegerField(default=0, verbose_name="FA DF", help_text='Faule defensywne')
     foul_off = models.PositiveIntegerField(default=0, verbose_name="FA OF", help_text='Faule ofensywne')
-    foul_unsport = models.PositiveIntegerField(default=0, verbose_name="FA N", help_text='Faule niepsortowe')
+    foul_unsport = models.PositiveIntegerField(default=0, verbose_name="FA N", help_text='Faule niesportowe')
     foul_tech = models.PositiveIntegerField(default=0, verbose_name="FA T", help_text='Faule techniczne')
     foul_disq = models.PositiveIntegerField(default=0, verbose_name="FA D", help_text='Faule dyskwalifikujące')
     time = models.PositiveIntegerField(default=0, verbose_name='T', help_text='Czas na boisku')
