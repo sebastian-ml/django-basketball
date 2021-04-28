@@ -1,3 +1,5 @@
+from django.views.generic.edit import FormMixin
+from game.forms import SeasonSearchForm
 from helpers import flatten_dict, get_stats_fields_meta
 from .models import PlayerStatistics as PS
 from django.urls import reverse_lazy
@@ -31,9 +33,10 @@ class PlayerStatsCreate(CreateView):
     success_url = reverse_lazy('home:add')
 
 
-class PlayerStatsRanking(ListView):
+class PlayerStatsRanking(FormMixin, ListView):
     """Show player stats ranking list."""
     model = PS
+    form_class = SeasonSearchForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -43,12 +46,13 @@ class PlayerStatsRanking(ListView):
                                                   'verbose_name')
 
         # Create general player ranking or for some season
-        season = self.kwargs.get('year', None)
+        season = self.request.GET.get('season', None)
         player_ranking = PS.get_player_ranking(season)
         player_ranking_cleaned = clear_player_ranking(player_ranking,
                                                       stats_fields_verbose_names)
 
         context['player_ranking'] = player_ranking_cleaned.to_dict('records')
         context['legend'] = stats_fields_meta
+        context['year'] = season
 
         return context

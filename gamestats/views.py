@@ -1,8 +1,10 @@
 from django.views.generic import ListView
+from django.views.generic.edit import FormMixin
 from .models import GameStats as GS
 from playerstats.models import PlayerStatistics as PS
 from helpers import flatten_dict, get_stats_fields_meta
 import pandas as pd
+from game.forms import SeasonSearchForm
 
 
 def create_ranking(game_stats):
@@ -36,10 +38,11 @@ def create_ranking(game_stats):
     return df
 
 
-class GameStatsList(ListView):
+class GameStatsList(FormMixin, ListView):
     """Display team ranking. Teams are sorted by total points."""
     model = GS
     context_object_name = 'gamestats'
+    form_class = SeasonSearchForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -49,7 +52,7 @@ class GameStatsList(ListView):
                                                   'verbose_name')
 
         # Create general team ranking or for a certain season
-        season = self.kwargs.get('year', None)
+        season = self.request.GET.get('season', None)
         game_stats = GS.get_game_stats(season=season)
 
         ranking = create_ranking(game_stats)
@@ -57,5 +60,6 @@ class GameStatsList(ListView):
 
         context['ranking'] = ranking.to_dict('records')
         context['legend'] = stats_fields_meta
+        context['year'] = season
 
         return context

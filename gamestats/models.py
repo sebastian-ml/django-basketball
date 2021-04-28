@@ -31,6 +31,9 @@ class GameStats(models.Model):
         """
         game_stats = cls.objects.all()
 
+        if season == 'Wszystkie':
+            season = None
+
         if season:
             game_stats = cls.objects.filter(game__season__year=season)
 

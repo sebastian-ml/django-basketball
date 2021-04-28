@@ -57,12 +57,15 @@ class PlayerStatistics(models.Model):
         return stat_fields
 
     @classmethod
-    def get_player_ranking(cls, year=None):
+    def get_player_ranking(cls, season=None):
         """Get aggregated player stats. Return as pandas df"""
         player_stats = cls.objects.all()
 
-        if year:
-            player_stats = cls.objects.filter(game__season__year=year)
+        if season == 'Wszystkie':
+            season = None
+
+        if season:
+            player_stats = cls.objects.filter(game__season__year=season)
 
         # Get field names and extend by needed additional fields
         field_names = list(player_stats.values()[0].keys())
