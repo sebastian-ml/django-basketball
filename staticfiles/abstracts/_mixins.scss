@@ -1,0 +1,21 @@
+@mixin flexbox($justifyContent:null, $alignItems:null) {
+  display: flex;
+
+  @if $justifyContent != null {
+    justify-content: $justifyContent;
+  }
+  @if $alignItems != null {
+    align-items: $alignItems;
+  }
+}
+
+@mixin size($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+// Basic boxshadow
+@mixin boxshadow() {
+  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
+  box-shadow: 3px 3px 12px 1px #cecece;
+}

@@ -1,0 +1,9 @@
+.grid {
+  display: grid;
+  grid-gap: 2rem;
+
+  &--home {
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto auto;
+  }
+}

@@ -1,0 +1,47 @@
+.dropdown {
+  height: 100%;
+  background-color: $primary-color;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    .dropdown__list {
+      visibility: visible;
+    }
+    .dropdown__header {
+      color: $color-light-hover;
+    }
+  }
+
+  &__header {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__list {
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: inherit;
+    @include size(100%, 100%)
+  }
+
+  &__item {
+    height: 100%;
+    background-color: inherit;
+  }
+
+  &__link {
+    height: 100%;
+    @include flexbox(center, center);
+
+    &:hover {
+      color: $color-light-hover;
+    }
+  }
+}

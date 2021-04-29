@@ -1,0 +1,20 @@
+.dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1em;
+
+  &__cell {
+    display: flex;
+    font-size: 0.9rem;
+  }
+
+  &__term {
+    font-weight: bold;
+  }
+
+  &__description {
+    margin-left: 0.5em;
+    color: $color-grey;
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,36 @@
+.table {
+  background-color: #fff;
+  border-radius: $border-radius;
+  color: $color-dark;
+  border-collapse: collapse;
+  @include boxshadow;
+
+  &__head {
+    border-bottom: 1px solid #d4d4d4;
+    font-size: 0.85em;
+  }
+
+  &__header {
+    font-weight: normal;
+    text-align: left;
+    color: $color-grey;
+    white-space: nowrap;
+  }
+
+  &__header, &__cell {
+    height: 50px;
+    padding: 0 15px;
+  }
+
+  &__row {
+    border-bottom: 1px solid #e9e9e9;
+  }
+
+  &__cell {
+    font-size: 0.9em;
+  }
+
+  &__footer .table__row {
+    border: 0;
+  }
+}
