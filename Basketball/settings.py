@@ -33,17 +33,18 @@ ALLOWED_HOSTS = ['https://basketball-demo.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
+    # My apps
+    'mysite.apps.MysiteConfig',
+    'game.apps.GameConfig',
+    'playerstats.apps.PlayerstatsConfig',
+    'gamestats.apps.GamestatsConfig',
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # My apps
-    'mysite.apps.MysiteConfig',
-    'game.apps.GameConfig',
-    'playerstats.apps.PlayerstatsConfig',
-    'gamestats.apps.GamestatsConfig',
 ]
 
 MIDDLEWARE = [
