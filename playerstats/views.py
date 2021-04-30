@@ -19,11 +19,12 @@ def clear_player_ranking(ranking, colnames):
 
     all_cols = {**colnames,
                 'player__first_name': 'Imię', 'player__last_name': 'Nazwisko',
-                'player__team': 'Drużyna', 'time': 'T', 'player_id': '#',
-                'game_counter': 'Mecze'}
+                'player__team': 'Drużyna', 'time': 'T', 'game_counter': 'Mecze'}
 
     ranking.rename(columns=all_cols, inplace=True)
-    ranking.drop(columns=['game_id', 'id'], inplace=True)
+    ranking.drop(columns=['game_id', 'id', 'player_id'], inplace=True)
+    ranking.sort_values(by='RZ1 O', ascending=False, inplace=True)
+    ranking.insert(0, '#', range(1, len(ranking.index) + 1))
 
     return ranking
 
