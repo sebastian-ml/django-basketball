@@ -5,6 +5,13 @@
   border-collapse: collapse;
   @include boxshadow;
 
+  &-wrapper {
+    overflow-x: auto;
+    @include boxshadow;
+    background-color: #fff;
+    border-radius: $border-radius;
+  }
+
   &__head {
     border-bottom: 1px solid #d4d4d4;
     font-size: 0.85em;
@@ -19,7 +26,7 @@
 
   &__header, &__cell {
     height: 50px;
-    padding: 0 15px;
+    padding: 0 12px;
   }
 
   &__row {

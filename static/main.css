@@ -619,6 +619,13 @@ select {
   -webkit-box-shadow: 3px 3px 12px 1px #cecece;
   box-shadow: 3px 3px 12px 1px #cecece;
 }
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
+  box-shadow: 3px 3px 12px 1px #cecece;
+  background-color: #fff;
+  border-radius: 7px;
+}
 .table__head {
   border-bottom: 1px solid #d4d4d4;
   font-size: 0.85em;
@@ -631,7 +638,7 @@ select {
 }
 .table__header, .table__cell {
   height: 50px;
-  padding: 0 15px;
+  padding: 0 12px;
 }
 .table__row {
   border-bottom: 1px solid #e9e9e9;

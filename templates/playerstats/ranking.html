@@ -3,7 +3,9 @@
     <main class="main main--centered container">
         <div class="grid">
             {% include 'components/_table-description-card.html' with legend=legend type='graczy' season_redirect='playerstats:ranking' %}
-            {% include 'components/_table-ranking.html' with ranking=player_ranking %}
+            <div class="table-wrapper">
+                {% include 'components/_table-ranking.html' with ranking=player_ranking %}
+            </div>
         </div>
     </main>
 {% endblock %}
