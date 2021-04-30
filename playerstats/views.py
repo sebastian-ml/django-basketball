@@ -1,4 +1,5 @@
 from django.views.generic.edit import FormMixin
+from game.models import Season
 from game.forms import SeasonSearchForm
 from helpers import flatten_dict, get_stats_fields_meta
 from .models import PlayerStatistics as PS
