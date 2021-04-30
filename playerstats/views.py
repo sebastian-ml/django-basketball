@@ -1,6 +1,5 @@
 from django.views.generic.edit import FormMixin
-from game.models import Season
-from game.forms import SeasonSearchForm
+# from game.forms import SeasonSearchForm
 from helpers import flatten_dict, get_stats_fields_meta
 from .models import PlayerStatistics as PS
 from django.urls import reverse_lazy
@@ -37,7 +36,7 @@ class PlayerStatsCreate(CreateView):
 class PlayerStatsRanking(FormMixin, ListView):
     """Show player stats ranking list."""
     model = PS
-    form_class = SeasonSearchForm
+    # form_class = SeasonSearchForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
