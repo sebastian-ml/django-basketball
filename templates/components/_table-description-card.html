@@ -4,17 +4,17 @@
         <hr>
     </header>
     <section class="card__body">
-{#        <form action="{% url season_redirect %}">#}
-{#            <label>Sezon:#}
-{#                <select name="season" id="season" onchange="this.form.submit()">#}
-{#                    {% for value, text in form.year.field.choices %}#}
-{#                        <option value="{{ value }}" {% if request.GET.season|add:"0" == value|add:"0" %}selected{% endif %}>#}
-{#                            {{ value }}#}
-{#                        </option>#}
-{#                    {% endfor %}#}
-{#                </select>#}
-{#            </label>#}
-{#        </form>#}
+        <form action="{% url season_redirect %}">
+            <label>Sezon:
+                <select name="season" id="season" onchange="this.form.submit()">
+                    {% for value, text in form.year.field.choices %}
+                        <option value="{{ value }}" {% if request.GET.season|add:"0" == value|add:"0" %}selected{% endif %}>
+                            {{ value }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </label>
+        </form>
 
         <h2>Legenda</h2>
         {% include 'components/_statistics_legend.html' with legend=legend %}
