@@ -1,7 +1,7 @@
 from django.views.generic.edit import FormMixin
 from game.models import Season
 from game.forms import SeasonSearchForm
-from helpers import flatten_dict, get_stats_fields_meta
+from helpers import flatten_dict
 from .models import PlayerStatistics as PS
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView
@@ -43,7 +43,7 @@ class PlayerStatsRanking(FormMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        stats_fields_meta = get_stats_fields_meta(PS)
+        stats_fields_meta = PS.get_stats_fields_meta()
         stats_fields_verbose_names = flatten_dict(stats_fields_meta,
                                                   'verbose_name')
 
@@ -54,7 +54,7 @@ class PlayerStatsRanking(FormMixin, ListView):
                                                       stats_fields_verbose_names)
 
         context['player_ranking'] = player_ranking_cleaned.to_dict('records')
-        context['legend'] = stats_fields_meta
+        context['legend'] = PS.create_legend()
         context['year'] = season
 
         return context

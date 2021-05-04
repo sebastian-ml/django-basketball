@@ -34,16 +34,45 @@ class PlayerStatistics(models.Model):
     foul_disq = models.PositiveIntegerField(default=0, verbose_name="FA D", help_text='Faule dyskwalifikujące')
     time = models.PositiveIntegerField(default=0, verbose_name='T', help_text='Czas na boisku')
 
-    player = models.ForeignKey(
-        Player,
-        on_delete=models.CASCADE,
-        help_text='Gracz'
-    )
-    game = models.ForeignKey(
-        Game,
-        on_delete=models.CASCADE,
-        help_text='Mecz'
-    )
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, help_text='Gracz')
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, help_text='Mecz')
+
+    @classmethod
+    def get_stats_fields_meta(cls):
+        """
+        Get stats fields meta information. Remove unnecesary fields.
+
+        Return:
+        field_names = {
+                'field_name': {
+                    'verbose_name': 'field_verbose_name',
+                    'help_text': 'field_help_text',
+                }
+            }
+        """
+        stats_fields_meta_info = get_model_fields_meta_info(cls,
+                                                            'verbose_name',
+                                                            'help_text')
+
+        unnecesary_fields = ['id', 'player', 'game']
+        for field_name in unnecesary_fields:
+            del stats_fields_meta_info[field_name]
+
+        return stats_fields_meta_info
+
+    @classmethod
+    def create_legend(cls, additional_fields=None, fields_to_remove=None):
+        """Create statistics legend."""
+        legend = cls.get_stats_fields_meta()
+
+        if additional_fields:
+            legend = {**legend, **additional_fields}
+
+        if fields_to_remove:
+            for field in fields_to_remove:
+                del legend[field]
+
+        return legend
 
     @classmethod
     def get_stats_field_names(cls):
@@ -76,8 +105,8 @@ class PlayerStatistics(models.Model):
         df = pd.DataFrame(list(player_stats.values(*field_names)))
         df['game_counter'] = 1
         stats = df.groupby(
-            ['player_id', 'player__first_name', 'player__last_name',
-             'player__team'], as_index=False
+            ['player_id', 'player__first_name', 'player__last_name','player__team'],
+            as_index=False
         ).sum()
 
         return stats

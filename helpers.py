@@ -37,26 +37,3 @@ def flatten_dict(dict, value_key):
         flattened_dict[k] = v[value_key]
 
     return flattened_dict
-
-
-def get_stats_fields_meta(model):
-    """
-    Get stats fields meta information. Remove unnecesary fields.
-
-    Return:
-    field_names = {
-            'field_name': {
-                'verbose_name': 'field_verbose_name',
-                'help_text': 'field_help_text',
-            }
-        }
-    """
-    stats_fields_meta_info = get_model_fields_meta_info(model,
-                                                        'verbose_name',
-                                                        'help_text')
-
-    unnecesary_fields = ['id', 'player', 'game']
-    for field_name in unnecesary_fields:
-        del stats_fields_meta_info[field_name]
-
-    return stats_fields_meta_info
