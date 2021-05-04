@@ -99,17 +99,43 @@ class PlayerStatistics(models.Model):
         # Get field names and extend by needed additional fields
         field_names = list(player_stats.values()[0].keys())
         field_names.extend(
-            ('player__first_name', 'player__last_name', 'player__team'))
+            ('player__first_name', 'player__last_name', 'player__team')
+        )
 
         # Calculate aggr stats for each player
-        df = pd.DataFrame(list(player_stats.values(*field_names)))
+        player_stats_with_teams = player_stats.values(*field_names)
+
+        df = pd.DataFrame(list(player_stats_with_teams))
         df['game_counter'] = 1
+
         stats = df.groupby(
-            ['player_id', 'player__first_name', 'player__last_name','player__team'],
+            ['player_id', 'player__first_name', 'player__last_name', 'player__team'],
             as_index=False
         ).sum()
 
         return stats
+
+    @classmethod
+    def get_clean_player_ranking(cls, colnames, season):
+        """Rename colnames and delete unnecesary columns.
+
+        Keyword arguments:
+        ranking -- player ranking (as pandas df)
+        colnames -- dictionary with old and new colnames. Must be in the following format:
+        {"col1_old_name": "col1_new_name", "col2_old_name": "col2_new_name"}
+        """
+        ranking = cls.get_player_ranking(season)
+
+        all_cols = {**colnames, 'player__first_name': 'Imię',
+                    'player__last_name': 'Nazwisko', 'player__team': 'Drużyna',
+                    'time': 'T','game_counter': 'Mecze'}
+
+        ranking.rename(columns=all_cols, inplace=True)
+        ranking.drop(columns=['game_id', 'id', 'player_id'], inplace=True)
+        ranking.sort_values(by='RZ1 O', ascending=False, inplace=True)
+        ranking.insert(0, '#', range(1, len(ranking.index) + 1))
+
+        return ranking
 
     @property
     def get_total_points(self):

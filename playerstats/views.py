@@ -8,27 +8,6 @@ from django.views.generic import CreateView, ListView
 from .forms import PlayerStatisticsForm
 
 
-def clear_player_ranking(ranking, colnames):
-    """Rename colnames and delete unnecesary columns.
-
-    Keyword arguments:
-    ranking -- player ranking (as pandas df)
-    colnames -- dictionary with old and new colnames. Must be in the following format:
-    {"col1_old_name": "col1_new_name", "col2_old_name": "col2_new_name"}
-    """
-
-    all_cols = {**colnames,
-                'player__first_name': 'Imię', 'player__last_name': 'Nazwisko',
-                'player__team': 'Drużyna', 'time': 'T', 'game_counter': 'Mecze'}
-
-    ranking.rename(columns=all_cols, inplace=True)
-    ranking.drop(columns=['game_id', 'id', 'player_id'], inplace=True)
-    ranking.sort_values(by='RZ1 O', ascending=False, inplace=True)
-    ranking.insert(0, '#', range(1, len(ranking.index) + 1))
-
-    return ranking
-
-
 class PlayerStatsCreate(CreateView):
     """Create player statistics which belongs to the certain game."""
     form_class = PlayerStatisticsForm
@@ -47,14 +26,14 @@ class PlayerStatsRanking(FormMixin, ListView):
         stats_fields_verbose_names = flatten_dict(stats_fields_meta,
                                                   'verbose_name')
 
-        # Create general player ranking or for some season
+        # Create general player ranking or for selected season
         season = self.request.GET.get('season', None)
-        player_ranking = PS.get_player_ranking(season)
-        player_ranking_cleaned = clear_player_ranking(player_ranking,
-                                                      stats_fields_verbose_names)
 
-        context['player_ranking'] = player_ranking_cleaned.to_dict('records')
-        context['legend'] = PS.create_legend()
+        player_ranking = PS.get_clean_player_ranking(stats_fields_verbose_names, season)
+        legend = PS.create_legend()
+
+        context['player_ranking'] = player_ranking.to_dict('records')
+        context['legend'] = legend
         context['year'] = season
 
         return context
