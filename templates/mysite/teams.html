@@ -1,0 +1,18 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+    <main class="main container">
+        <div class="card card--100">
+            <header class="card__header">
+                <h1>Wszystkie drużyny</h1>
+                <hr>
+            </header>
+            <section class="card__body">
+                <ul class="ul">
+                    {% for team in teams %}
+                        <li>{{ team.name }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+    </main>
+{% endblock %}

@@ -1,5 +1,5 @@
-from game.models import Game
-from django.views.generic import TemplateView
+from game.models import Game, Team
+from django.views.generic import TemplateView, ListView
 
 
 class Home(TemplateView):
@@ -8,3 +8,8 @@ class Home(TemplateView):
         context['games'] = Game.objects.all()
 
         return context
+
+
+class TeamsList(ListView):
+    model = Team
+    context_object_name = 'teams'

@@ -392,10 +392,6 @@ h5 {
   display: grid;
   grid-gap: 2rem;
 }
-.grid--home {
-  grid-template-columns: 3fr 1fr;
-  grid-template-rows: auto auto;
-}
 
 .header {
   background-color: #323232;
@@ -503,6 +499,9 @@ h5 {
   border-radius: 7px;
   padding: 1.5rem;
 }
+.card--100 {
+  width: 100%;
+}
 
 .dropdown {
   height: 100%;
@@ -605,6 +604,12 @@ hr {
   white-space: nowrap;
 }
 
+.ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1em;
+}
+
 select {
   border-radius: 3px;
   border-color: #d8d8d8;
@@ -648,6 +653,11 @@ select {
 }
 .table__footer .table__row {
   border: 0;
+}
+
+.grid--home {
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: auto auto;
 }
 
 /*# sourceMappingURL=main.css.map */
