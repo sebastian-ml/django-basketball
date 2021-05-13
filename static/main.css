@@ -547,11 +547,15 @@ h5 {
 }
 
 .form {
-  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
-  box-shadow: 3px 3px 12px 1px #cecece;
+  display: grid;
+  grid-gap: 2rem;
+}
+.form__card {
   border-radius: 7px;
   background-color: #fff;
   padding: 2rem;
+  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
+  box-shadow: 3px 3px 12px 1px #cecece;
 }
 .form__row {
   margin: 0.5em 0;

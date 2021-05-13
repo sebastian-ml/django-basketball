@@ -13,6 +13,12 @@ class PlayerStatsCreate(CreateView):
     form_class = PlayerStatisticsForm
     success_url = reverse_lazy('playerstats:add')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['seasons'] = SeasonSearchForm
+
+        return context
+
 
 class PlayerStatsRanking(FormMixin, ListView):
     """Show player stats ranking list."""

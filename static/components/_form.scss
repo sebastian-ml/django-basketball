@@ -1,8 +1,13 @@
 .form {
-  @include boxshadow;
-  border-radius: $border-radius;
-  background-color: #fff;
-  padding: 2rem;
+  display: grid;
+  grid-gap: 2rem;
+
+  &__card {
+    border-radius: $border-radius;
+    background-color: #fff;
+    padding: 2rem;
+    @include boxshadow;
+  }
 
   &__row {
     margin: 0.5em 0;
@@ -23,7 +28,7 @@
     }
   }
 
-   label {
+  label {
     color: $color-grey;
     margin-right: 0.75em;
   }
