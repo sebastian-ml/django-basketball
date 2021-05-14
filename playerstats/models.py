@@ -38,6 +38,20 @@ class PlayerStatistics(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, help_text='Mecz')
 
     @classmethod
+    def get_unassigned_players(cls, unfinished_games_ids):
+        """
+        For each game return missing players id -
+        players which don't have statistics for the specific game.
+
+
+        :param unfinished_ids: A list with games ids with missing playerstats.
+        """
+        playerstats = cls.objects.filter(game__id__in=unfinished_games_ids)
+        players_ids = [playerstat.player.id for playerstat in playerstats]
+
+        return players_ids
+
+    @classmethod
     def get_stats_fields_meta(cls):
         """
         Get stats fields meta information. Remove unnecesary fields.

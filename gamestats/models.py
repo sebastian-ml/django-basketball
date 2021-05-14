@@ -22,6 +22,22 @@ class GameStats(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
 
     @classmethod
+    def get_not_ended_games_ids(cls):
+        game_stats = cls.objects.all()
+        not_done_games_ids = [game_stat.game.id for game_stat in game_stats if
+                              not game_stat.is_game_over()]
+
+        return not_done_games_ids
+
+    @classmethod
+    def get_not_ended_games_teams_ids(cls):
+        game_stats = cls.objects.all()
+        teams_ids = [game_stat.team.name for game_stat in game_stats if
+                     not game_stat.is_game_over()]
+
+        return teams_ids
+
+    @classmethod
     def get_game_stats(cls, season=None, game_done=True):
         """Return game stats for all seasons or for the specific season.
 
