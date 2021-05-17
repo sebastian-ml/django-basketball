@@ -20,7 +20,11 @@
                 <tbody>
                 {% for stats in playerstats %}
                     <tr class="table__row">
-                        <td class="table__cell">{{ stats.player }}</td>
+                        <td class="table__cell">
+                            <a class="link" href="{% url 'playerstats:update' stats.player.pk %}">
+                                {{ stats.player }}
+                            </a>
+                        </td>
                         <td class="table__cell">{{ stats.game.team_1 }} vs {{ stats.game.team_2 }}</td>
                         <td class="table__cell">{{ stats.game.date}}</td>
                         <td class="table__cell">{{ stats.game.season.year }}</td>

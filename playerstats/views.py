@@ -3,19 +3,31 @@ from game.models import Season
 from game.forms import SeasonSearchForm
 from helpers import flatten_dict
 from .models import PlayerStatistics as PS
+from django.views.generic import CreateView, ListView, UpdateView
+from .forms import PlayerStatisticsForm, PlayerStatisticsFormCreate
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
-from .forms import PlayerStatisticsForm
 
 
 class PlayerStatsCreate(CreateView):
     """Create player statistics which belongs to the certain game."""
-    form_class = PlayerStatisticsForm
-    success_url = reverse_lazy('playerstats:add')
+    form_class = PlayerStatisticsFormCreate
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['seasons'] = SeasonSearchForm
+
+        return context
+
+
+class PlayerStatsUpdate(UpdateView):
+    model = PS
+    form_class = PlayerStatisticsForm
+    success_url = reverse_lazy('playerstats:list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['seasons'] = SeasonSearchForm
+        context['btn_message'] = 'Aktualizuj'
 
         return context
 

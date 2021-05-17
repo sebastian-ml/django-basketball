@@ -106,7 +106,9 @@
             </div>
         </fieldset>
         <div class="form__row">
-            <button class="btn form__btn" type="submit">Dodaj</button>
+            <button class="btn form__btn" type="submit">
+                {{ btn_message|default:"Dodaj" }}
+            </button>
         </div>
     </div>
 </form>

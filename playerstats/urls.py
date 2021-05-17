@@ -16,6 +16,11 @@ urlpatterns = [
              template_name=template_dir + 'list.html'
          ),
          name='list'),
+    path('statistics/<int:pk>/update/',
+         views.PlayerStatsUpdate.as_view(
+             template_name=template_dir + 'add.html'
+         ),
+         name='update'),
     path('ranking/',
          views.PlayerStatsRanking.as_view(
              template_name=template_dir + 'ranking.html'

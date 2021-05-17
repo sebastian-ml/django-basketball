@@ -12,6 +12,18 @@ a {
   }
 }
 
+.link {
+  color: initial;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: initial;
+  }
+}
+
 h1,
 h2,
 h3,

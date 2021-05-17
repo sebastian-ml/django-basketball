@@ -4,6 +4,7 @@ from mysite.models import Player
 from helpers import get_model_fields_meta_info, flatten_dict
 from game.models import Game
 import pandas as pd
+from django.urls import reverse
 
 
 class PlayerStatistics(models.Model):
@@ -206,3 +207,5 @@ class PlayerStatistics(models.Model):
     def __str__(self):
         return f'{self.player} | {self.game}'
 
+    def get_absolute_url(self):
+        return reverse('playerstats:add')

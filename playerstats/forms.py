@@ -6,13 +6,23 @@ from mysite.models import Player
 
 
 class PlayerStatisticsForm(forms.ModelForm):
+    class Meta:
+        model = PS
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.label = field.help_text
+            field.widget.attrs['class'] = 'form__input'
+
+
+class PlayerStatisticsFormCreate(PlayerStatisticsForm):
     """
     Display only unfinished (without all stats) games
     and players which don't have statistics related to the chosen game.
     """
-    class Meta:
-        model = PS
-        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -26,7 +36,3 @@ class PlayerStatisticsForm(forms.ModelForm):
 
         self.fields['player'].queryset = unassigned_players
         self.fields['game'].queryset = Game.objects.filter(id__in=not_ended_games_ids)
-
-        for field in self.fields.values():
-            field.label = field.help_text
-            field.widget.attrs['class'] = 'form__input'

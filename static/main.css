@@ -379,6 +379,16 @@ a:visited {
   color: #d8d8d8;
 }
 
+.link {
+  color: initial;
+}
+.link:hover {
+  text-decoration: underline;
+}
+.link:visited {
+  color: initial;
+}
+
 h1,
 h2,
 h3,
