@@ -20,6 +20,13 @@ class PlayerStatsCreate(CreateView):
         return context
 
 
+class PlayerStatsList(ListView):
+    model = PS
+    context_object_name = 'playerstats'
+    paginate_by = 10
+    ordering = ['-game__date', 'player__team__name', 'player__last_name']
+
+
 class PlayerStatsRanking(FormMixin, ListView):
     """Show player stats ranking list."""
     model = PS

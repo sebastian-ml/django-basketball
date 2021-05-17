@@ -2,6 +2,7 @@
   min-height: calc(100vh - #{$header-height});
   margin: 0 auto;
   padding: 1.5rem;
+  @include flexbox(center);
 
   &--centered {
     @include flexbox(center, center);

@@ -1,0 +1,36 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+    <main class="main container">
+        <div class="grid grid--playerstats-list">
+
+            <div class="card">
+                <h1>Lista statystyk graczy</h1>
+                <hr>
+            </div>
+
+            <table class="table">
+                <thead class="table__head">
+                <tr>
+                    <th class="table__header">Gracz</th>
+                    <th class="table__header">Mecz</th>
+                    <th class="table__header">Data meczu</th>
+                    <th class="table__header">Sezon</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for stats in playerstats %}
+                    <tr class="table__row">
+                        <td class="table__cell">{{ stats.player }}</td>
+                        <td class="table__cell">{{ stats.game.team_1 }} vs {{ stats.game.team_2 }}</td>
+                        <td class="table__cell">{{ stats.game.date}}</td>
+                        <td class="table__cell">{{ stats.game.season.year }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {% include 'components/_pagination.html' %}
+
+        </div>
+    </main>
+{% endblock %}

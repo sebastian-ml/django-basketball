@@ -410,6 +410,8 @@ h5 {
   min-height: calc(100vh - 60px);
   margin: 0 auto;
   padding: 1.5rem;
+  display: flex;
+  justify-content: center;
 }
 .main--centered {
   display: flex;
@@ -614,6 +616,10 @@ hr {
   grid-gap: 1em;
 }
 
+.pagination {
+  margin: auto;
+}
+
 select {
   border-radius: 3px;
   border-color: #d8d8d8;
@@ -662,6 +668,11 @@ select {
 .grid--home {
   grid-template-columns: 3fr 1fr;
   grid-template-rows: auto auto;
+}
+
+.grid--playerstats-list {
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content;
 }
 
 /*# sourceMappingURL=main.css.map */

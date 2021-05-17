@@ -1,0 +1,6 @@
+.grid {
+  &--playerstats-list {
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content;
+  }
+}
