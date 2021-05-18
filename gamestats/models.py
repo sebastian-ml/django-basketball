@@ -21,77 +21,21 @@ class GameStats(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
 
-    @classmethod
-    def get_not_ended_games_ids(cls):
-        game_stats = cls.objects.all()
-        not_done_games_ids = [game_stat.game.id for game_stat in game_stats if
-                              not game_stat.is_game_over()]
+    class Meta:
+        db_table = 'game_stats'
+        unique_together = ['team', 'game']
+        ordering = ['-game']
 
-        return not_done_games_ids
+    def __str__(self):
+        return f'game: {self.game.id} team: {self.team}'
 
-    @classmethod
-    def get_not_ended_games_teams_ids(cls):
-        game_stats = cls.objects.all()
-        teams_ids = [game_stat.team.name for game_stat in game_stats if
-                     not game_stat.is_game_over()]
-
-        return teams_ids
-
-    @classmethod
-    def get_game_stats(cls, season=None, game_done=True):
-        """Return game stats for all seasons or for the specific season.
-
-        Keyword arguments:
-        season -- the season year, e.g. 2021
-        game_done -- the game status - if True get only games that has all needed stats
-        game_done_stats_amount -- the required number of stats to mark the game as done
-        """
-        game_stats = cls.objects.all()
-
-        if season == 'Wszystkie':
-            season = None
-
-        if season:
-            game_stats = cls.objects.filter(game__season__year=season)
-
-        if game_done:
-            done_games_ids = [game.id for game in game_stats if
-                              game.is_game_over()]
-            return game_stats.filter(id__in=done_games_ids)
-        else:
-            return game_stats
-
-    @classmethod
-    def get_team_ranking(cls, season=None, game_done=True):
-        """
-        Calculate total points from the given game stats. Sort by number of wins.
-        Return as a pandas df, each row - 1 team.
-        """
-        ranking = []
-        game_stats = cls.get_game_stats(season, game_done)
-
-        for game_stat in game_stats:
-            game_team_stats = {'Drużyna': game_stat.team.name,
-                               'Mecze': 1,
-                               'Wygrane': game_stat.is_winner,
-                               'Przegrane': not game_stat.is_winner,
-                               'W/O W': game_stat.is_forfeit_winner,
-                               'W/O P': game_stat.is_forfeit_looser}
-
-            game_total_team_pts = game_stat.get_game_team_stats()
-            game_team_stats.update(game_total_team_pts)
-
-            ranking.append(game_team_stats)
-
-        df = pd.DataFrame(ranking)
-        df = df.groupby(['Drużyna'], as_index=False).sum()
-        df.sort_values(by='Wygrane', ascending=False, inplace=True)
-        df.insert(0, '#', range(1, len(df.index) + 1))
-
-        total_points = df['Wygrane'] * 2 + df['Przegrane'] - df['W/O P']
-        df.insert(1, 'PKT', total_points)
-
-        return df
+    def clean(self):
+        # Chosen team must be same as team1 or team2 from the desired game
+        if self.team not in [self.game.team_1, self.game.team_2]:
+            raise ValidationError(
+                f'Dla wybranej gry można przypisać jedynie statystyki drużyny '
+                f'której wybrany mecz dotyczy - {self.game.team_1} lub {self.game.team_2}'
+            )
 
     @property
     def get_opponent_name(self):
@@ -167,18 +111,76 @@ class GameStats(models.Model):
 
         return team_game_stats
 
-    def clean(self):
-        # Chosen team must be same as team1 or team2 from the desired game
-        if self.team not in [self.game.team_1, self.game.team_2]:
-            raise ValidationError(
-                f'Dla wybranej gry można przypisać jedynie statystyki drużyny '
-                f'której wybrany mecz dotyczy - {self.game.team_1} lub {self.game.team_2}'
-            )
+    @classmethod
+    def get_not_ended_games_ids(cls):
+        game_stats = cls.objects.all()
+        not_done_games_ids = [game_stat.game.id for game_stat in game_stats if
+                              not game_stat.is_game_over()]
 
-    class Meta:
-        db_table = 'game_stats'
-        unique_together = ['team', 'game']
-        ordering = ['-game']
+        return not_done_games_ids
 
-    def __str__(self):
-        return f'game: {self.game.id} team: {self.team}'
+    @classmethod
+    def get_not_ended_games_teams_ids(cls):
+        game_stats = cls.objects.all()
+        teams_ids = [game_stat.team.name for game_stat in game_stats if
+                     not game_stat.is_game_over()]
+
+        return teams_ids
+
+    @classmethod
+    def get_game_stats(cls, season=None, game_done=True):
+        """Return game stats for all seasons or for the specific season.
+
+        Keyword arguments:
+        season -- the season year, e.g. 2021
+        game_done -- the game status - if True get only games that has all needed stats
+        game_done_stats_amount -- the required number of stats to mark the game as done
+        """
+        game_stats = cls.objects.all()
+
+        if season == 'Wszystkie':
+            season = None
+
+        if season:
+            game_stats = cls.objects.filter(game__season__year=season)
+
+        if game_done:
+            done_games_ids = [game.id for game in game_stats if
+                              game.is_game_over()]
+            return game_stats.filter(id__in=done_games_ids)
+        else:
+            return game_stats
+
+    @classmethod
+    def get_team_ranking(cls, season=None, game_done=True):
+        """
+        Calculate total points from the given game stats. Sort by number of wins.
+        Return as a pandas df, each row - 1 team.
+        """
+        ranking = []
+        game_stats = cls.get_game_stats(season, game_done)
+
+        for game_stat in game_stats:
+            game_team_stats = {'Drużyna': game_stat.team.name,
+                               'Mecze': 1,
+                               'Wygrane': game_stat.is_winner,
+                               'Przegrane': not game_stat.is_winner,
+                               'W/O W': game_stat.is_forfeit_winner,
+                               'W/O P': game_stat.is_forfeit_looser}
+
+            game_total_team_pts = game_stat.get_game_team_stats()
+            game_team_stats.update(game_total_team_pts)
+
+            ranking.append(game_team_stats)
+
+        df = pd.DataFrame(ranking)
+        df = df.groupby(['Drużyna'], as_index=False).sum()
+        df.sort_values(by='Wygrane', ascending=False, inplace=True)
+        df.insert(0, '#', range(1, len(df.index) + 1))
+
+        total_points = df['Wygrane'] * 2 + df['Przegrane'] - df['W/O P']
+        df.insert(1, 'PKT', total_points)
+
+        return df
+
+

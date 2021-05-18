@@ -15,10 +15,7 @@ class Player(models.Model):
     first_name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20)
-    team = models.ForeignKey(
-        Team,
-        on_delete=models.CASCADE,
-    )
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'player'

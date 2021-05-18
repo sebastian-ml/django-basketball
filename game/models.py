@@ -37,6 +37,10 @@ class Game(models.Model):
         unique_together = ['team_1', 'team_2', 'date']
         db_table = 'game'
 
+    def __str__(self):
+        return f'{self.id}. {self.team_1} vs {self.team_2} ' \
+               f'| {self.date} | season {self.season.year}'
+
     def clean(self):
         # Do not allow to choose the same home and away team
         if self.team_2 == self.team_1:
@@ -48,7 +52,3 @@ class Game(models.Model):
             raise ValidationError(
                 f'Walkower można wybrać tylko dla drużyny {self.team_1} lub {self.team_2}'
             )
-
-    def __str__(self):
-        return f'{self.id}. {self.team_1} vs {self.team_2} ' \
-               f'| {self.date} | season {self.season.year}'
