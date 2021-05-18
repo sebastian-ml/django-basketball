@@ -670,6 +670,7 @@ select {
 }
 .table__cell {
   font-size: 0.9em;
+  white-space: nowrap;
 }
 .table__footer .table__row {
   border: 0;

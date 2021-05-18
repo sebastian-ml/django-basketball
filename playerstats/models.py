@@ -38,6 +38,11 @@ class PlayerStatistics(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE, help_text='Gracz')
     game = models.ForeignKey(Game, on_delete=models.CASCADE, help_text='Mecz')
 
+    @property
+    def get_total_points(self):
+        """Get total player score for the specific game."""
+        return self.shot_1_pts_ok + self.shot_2_pts_ok * 2 + self.shot_3_pts_ok * 3
+
     @classmethod
     def get_unassigned_players(cls, unfinished_games_ids):
         """
@@ -101,8 +106,8 @@ class PlayerStatistics(models.Model):
         return stat_fields
 
     @classmethod
-    def get_player_ranking(cls, season=None):
-        """Get aggregated player stats. Return as pandas df"""
+    def get_playerstats_list(cls, season=None):
+        """Get each player statistics. Return as pandas df."""
         player_stats = cls.objects.all()
 
         if season == 'Wszystkie':
@@ -117,45 +122,87 @@ class PlayerStatistics(models.Model):
             ('player__first_name', 'player__last_name', 'player__team')
         )
 
-        # Calculate aggr stats for each player
         player_stats_with_teams = player_stats.values(*field_names)
 
         df = pd.DataFrame(list(player_stats_with_teams))
         df['game_counter'] = 1
+        df_with_eval = cls.calculate_eval(df)
 
-        stats = df.groupby(
-            ['player_id', 'player__first_name', 'player__last_name', 'player__team'],
-            as_index=False
-        ).sum()
+        return df_with_eval
+
+    @classmethod
+    def calculate_eval(cls, df):
+        df['Eval'] = round(df['shot_1_pts_ok'] + df['shot_2_pts_ok'] * 2 + df['shot_3_pts_ok'] * 3 \
+                           + df['reb_def'] + df['reb_off'] + df['ast'] + df['stl'] + df['blck'] \
+                           - df['ball_loos'] \
+                           - (df['shot_2_pts_total'] + df['shot_3_pts_total'] - df['shot_1_pts_ok'] - df['shot_2_pts_ok'] - df['shot_3_pts_ok']), 2)
+
+        return df
+
+    @classmethod
+    def get_aggregated_stats(cls, player_statistics):
+        """
+        Return aggregated stats with the average (per game) for each statistics per player.
+        Return as pandas df.
+        """
+        stats = player_statistics.groupby(['player_id',
+                                           'player__first_name',
+                                           'player__last_name',
+                                           'player__team'],
+                                          as_index=False).sum()
+
+        stats_fields_names = list(cls.get_stats_field_names().keys())
+        stats_fields_names.append('Eval')
+
+        for field in stats_fields_names:
+            stats[f'{field}_mean'] = round(stats[field] / stats['game_counter'], 2)
 
         return stats
 
     @classmethod
+    def concat_total_stats_with_mean(cls, player_ranking):
+        """
+        Replace stats column with stats + mean in the following format:
+        shots = 4 (1.33). It means that player has 4 total shots and 1.33 on average.
+        E.g. df['shots'] = 4 (1.33)
+        """
+        stats_fields_names = list(cls.get_stats_field_names().keys())
+        stats_fields_names.append('Eval')
+
+        for field in stats_fields_names:
+            player_ranking[field] = player_ranking[field].astype(str) \
+                                    + ' (' + player_ranking[field + "_mean"].astype(str) + ')'
+
+        stats_fields_names_mean = [field + "_mean" for field in stats_fields_names]
+        player_ranking.drop(columns=stats_fields_names_mean, inplace=True)
+
+        return player_ranking
+
+    @classmethod
     def get_clean_player_ranking(cls, colnames, season):
-        """Rename colnames and delete unnecesary columns.
+        """Rename colnames and delete unnecesary columns. Prepare df to display on the page
 
         Keyword arguments:
         ranking -- player ranking (as pandas df)
         colnames -- dictionary with old and new colnames. Must be in the following format:
         {"col1_old_name": "col1_new_name", "col2_old_name": "col2_new_name"}
         """
-        ranking = cls.get_player_ranking(season)
+        playerstats = cls.get_playerstats_list(season)
+        ranking = cls.get_aggregated_stats(playerstats)
+        ranking = cls.concat_total_stats_with_mean(ranking)
 
-        all_cols = {**colnames, 'player__first_name': 'Imię',
-                    'player__last_name': 'Nazwisko', 'player__team': 'Drużyna',
-                    'time': 'T','game_counter': 'Mecze'}
+        all_cols = {
+            **colnames, 'time': 'T', 'game_counter': 'Mecze'
+        }
 
+        ranking.insert(0, 'Gracz', ranking['player__first_name'] + ' ' + ranking['player__last_name'] + ' (' + ranking['player__team'] + ')')
         ranking.rename(columns=all_cols, inplace=True)
-        ranking.drop(columns=['game_id', 'id', 'player_id'], inplace=True)
+        ranking.drop(columns=['game_id', 'id', 'player_id', 'player__first_name',
+                              'player__last_name', 'player__team'], inplace=True)
         ranking.sort_values(by='RZ1 O', ascending=False, inplace=True)
         ranking.insert(0, '#', range(1, len(ranking.index) + 1))
 
         return ranking
-
-    @property
-    def get_total_points(self):
-        """Get total player score for the specific game."""
-        return self.shot_1_pts_ok + self.shot_2_pts_ok + self.shot_3_pts_ok
 
     def clean(self):
         # Check if the selected player belongs to the team_1 or team_2 in the choosen game
