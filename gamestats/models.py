@@ -57,6 +57,10 @@ class GameStats(models.Model):
         return self.game.forfeit is not None
 
     @property
+    def get_forfeit_team_name(self):
+        return self.game.forfeit
+
+    @property
     def is_winner(self):
         if self.is_game_ended_by_forfeit:
             forfeit_team = self.game.forfeit
@@ -183,4 +187,34 @@ class GameStats(models.Model):
 
         return df
 
+    @classmethod
+    def get_game_schedule_with_score(cls):
+        """
+        Return pandas dataframe with all finished games. Df contains:
+        date, team1, team2, score, forfeit info.
+        """
+        all_gamestats = cls.objects.all()
+        gamestats = []
+        appended_games_ids = []
 
+        for gamestat in all_gamestats:
+            current_game = gamestat.game_id
+
+            # Exclude duplicates and unfinished games
+            if current_game in appended_games_ids:
+                continue
+
+            appended_games_ids.append(current_game)
+            game_info = {
+                'date': gamestat.game.date,
+                'team_1': gamestat.team,
+                'team_2': gamestat.get_opponent_name,
+                'score': f'{gamestat.get_score} : {gamestat.get_opponent_score}',
+                'forfeit': gamestat.get_forfeit_team_name,
+            }
+            gamestats.append(game_info)
+
+        df = pd.DataFrame(gamestats)
+        df.sort_values(by=['date'], inplace=True, ascending=False)
+
+        return df

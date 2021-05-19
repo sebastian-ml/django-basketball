@@ -3,6 +3,7 @@
     <tr>
         <th class="table__header">Data</th>
         <th class="table__header">Drużyna 1</th>
+        <th class="table__header">Wynik</th>
         <th class="table__header">Drużyna 2</th>
         <th class="table__header">Walkower</th>
     </tr>
@@ -11,13 +12,20 @@
     {% for game in games %}
         <tr class="table__row">
             <td class="table__cell">{{ game.date|date:"d/m/Y" }}</td>
-            <td class="table__cell">{{ game.team_1}}</td>
-            <td class="table__cell">{{ game.team_2 }}</td>
+            <td class="table__cell">{{ game.team_1 }}</td>
             <td class="table__cell">
                 {% if game.forfeit is None %}
-                    -
+                    {{ game.score }}
                 {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td class="table__cell">{{ game.team_2 }}</td>
+            <td class="table__cell">
+                {% if game.forfeit %}
                     {{ game.forfeit }}
+                {% else %}
+                    -
                 {% endif %}
             </td>
         </tr>

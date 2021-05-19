@@ -8,6 +8,17 @@ from game.models import Season
 from game.forms import SeasonSearchForm
 
 
+class GameSchedule(ListView):
+    """Display game schedule. If game is ended display score also."""
+    model = GS
+    context_object_name = 'games'
+
+    def get_queryset(self):
+        return GS \
+            .get_game_schedule_with_score() \
+            .to_dict('records')
+
+
 class GameStatsList(FormMixin, ListView):
     """Display team ranking. Teams are sorted by total points."""
     model = GS
