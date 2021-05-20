@@ -1,8 +1,9 @@
 .main {
   min-height: calc(100vh - #{$header-height});
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1.5rem 0;
   @include flexbox(center, flex-start);
+  position: relative;
 
   &--centered {
     @include flexbox(center, center);

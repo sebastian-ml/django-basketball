@@ -404,7 +404,7 @@ h5 {
 }
 
 .header {
-  background-color: #323232;
+  background-color: #000;
   border-bottom: 1px solid #232323;
   color: #d8d8d8;
   height: 60px;
@@ -419,10 +419,11 @@ h5 {
 .main {
   min-height: calc(100vh - 60px);
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1.5rem 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  position: relative;
 }
 .main--centered {
   display: flex;
@@ -430,17 +431,24 @@ h5 {
   align-items: center;
 }
 
+.menu {
+  width: 100%;
+  z-index: 100;
+}
 .menu__list, .menu__sublist, .menu__link, .menu__item {
   height: 100%;
 }
 .menu__list {
   display: flex;
 }
+.menu__icon {
+  margin-left: 0.5em;
+}
 .menu__link {
   transition: background 0.2s, color 0.2s;
   position: relative;
   padding: 1em;
-  background-color: #323232;
+  background-color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -479,6 +487,9 @@ h5 {
 .menu__item:hover > .menu__sublist .menu__item {
   transform: translateX(0);
 }
+.menu__item:first-child {
+  margin-right: auto;
+}
 .menu__sublist {
   position: absolute;
   top: 0;
@@ -496,18 +507,18 @@ h5 {
   border-radius: 7px;
   cursor: pointer;
   border: 1px solid transparent;
-  background-color: #2776f6;
+  background-color: #d85405;
   color: #fff;
   padding: 0.4em 0.75em;
   transition: background-color 0.2s ease;
 }
 .btn:hover {
-  background-color: #2880ff;
+  background-color: #f46d00;
 }
 
 .card {
-  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
-  box-shadow: 3px 3px 12px 1px #cecece;
+  -webkit-box-shadow: 2px 2px 8px 0 #cecece;
+  box-shadow: 2px 2px 8px 0 #cecece;
   background-color: #fff;
   border-radius: 7px;
   padding: 1.5rem;
@@ -518,7 +529,7 @@ h5 {
 
 .dropdown {
   height: 100%;
-  background-color: #323232;
+  background-color: #000;
   cursor: pointer;
   position: relative;
 }
@@ -567,8 +578,8 @@ h5 {
   border-radius: 7px;
   background-color: #fff;
   padding: 2rem;
-  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
-  box-shadow: 3px 3px 12px 1px #cecece;
+  -webkit-box-shadow: 2px 2px 8px 0 #cecece;
+  box-shadow: 2px 2px 8px 0 #cecece;
 }
 .form__row {
   margin: 0.5em 0;
@@ -639,7 +650,7 @@ hr {
   text-align: center;
 }
 .profile__team {
-  color: #323232;
+  color: #000;
 }
 
 .poster {
@@ -676,13 +687,13 @@ select {
   border-radius: 7px;
   color: #161616;
   border-collapse: collapse;
-  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
-  box-shadow: 3px 3px 12px 1px #cecece;
+  -webkit-box-shadow: 2px 2px 8px 0 #cecece;
+  box-shadow: 2px 2px 8px 0 #cecece;
 }
 .table-wrapper {
   overflow-x: auto;
-  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
-  box-shadow: 3px 3px 12px 1px #cecece;
+  -webkit-box-shadow: 2px 2px 8px 0 #cecece;
+  box-shadow: 2px 2px 8px 0 #cecece;
   background-color: #fff;
   border-radius: 7px;
 }
@@ -703,6 +714,9 @@ select {
 .table__row {
   border-bottom: 1px solid #e9e9e9;
 }
+.table__row:last-child {
+  border-bottom: transparent;
+}
 .table__cell {
   font-size: 0.9em;
   white-space: nowrap;
@@ -718,6 +732,23 @@ select {
 
 .grid--playerstats-list {
   grid-template-rows: min-content;
+}
+
+.bg {
+  position: relative;
+}
+.bg:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("img/background-theme.jpg");
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -1,4 +1,6 @@
 .menu {
+  width: 100%;
+  z-index: 100;
   $gap-size: 2px;
 
   &__list,
@@ -10,6 +12,10 @@
 
   &__list {
     display: flex;
+  }
+
+  &__icon {
+    margin-left: 0.5em;
   }
 
   &__link {
@@ -61,6 +67,10 @@
           transform: translateX(0);
         }
       }
+    }
+
+    &:first-child {
+      margin-right: auto;
     }
   }
 

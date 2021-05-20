@@ -16,6 +16,6 @@
 
 // Basic boxshadow
 @mixin boxshadow() {
-  -webkit-box-shadow: 3px 3px 12px 1px #cecece;
-  box-shadow: 3px 3px 12px 1px #cecece;
+  -webkit-box-shadow: 2px 2px 8px 0 #cecece;
+  box-shadow: 2px 2px 8px 0 #cecece;
 }

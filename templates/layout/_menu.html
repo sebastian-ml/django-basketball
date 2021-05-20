@@ -1,15 +1,44 @@
+{% load static %}
 <nav class="menu">
     <ul class="menu__list">
-        <li class="menu__item"><a href="{% url 'home:home' %}" class="menu__link">Home</a></li>
-        <li class="menu__item"><a href="{% url 'home:teams-list' %}" class="menu__link">Drużyny</a></li>
-        <li class="menu__item"><a href="{% url 'home:players-list' %}" class="menu__link">Zawodnicy</a></li>
-        <li class="menu__item"><a class="menu__link">Tabela</a>
+        <li class="menu__item">
+            <a href="{% url 'home:home' %}" class="menu__link">Home
+                <span class="menu__icon">
+                    <i class="icon-home"></i>
+                </span>
+            </a>
+        </li>
+        <li class="menu__item">
+            <a href="{% url 'home:teams-list' %}" class="menu__link">Drużyny
+                <span class="menu__icon">
+                    <i class="icon-group"></i>
+                </span>
+            </a>
+        </li>
+        <li class="menu__item">
+            <a href="{% url 'home:players-list' %}" class="menu__link">Zawodnicy
+                <span class="menu__icon">
+                    <i class="icon-adult"></i>
+                </span>
+            </a>
+        </li>
+        <li class="menu__item"><a class="menu__link">Tabela
+            <span class="menu__icon">
+                    <i class="icon-trophy"></i>
+            </span>
+        </a>
             <ul class="menu__dropdown">
-                <li class="menu__item"><a href="{% url 'gamestats:ranking' %}" class="menu__link">Drużyny</a></li>
+                <li class="menu__item">
+                    <a href="{% url 'gamestats:ranking' %}" class="menu__link">Drużyny</a></li>
                 <li class="menu__item"><a href="{% url 'playerstats:ranking' %}" class="menu__link">Zawodnicy</a></li>
             </ul>
         </li>
-        <li class="menu__item"><a class="menu__link">Statystyki</a>
+        <li class="menu__item">
+            <a class="menu__link">Statystyki
+                <span class="menu__icon">
+                    <i class="icon-chart-bar"></i>
+                </span>
+            </a>
             <ul class="menu__dropdown">
                 <li class="menu__item"><a class="menu__link">Zawodnicy</a>
                     <ul class="menu__sublist">
@@ -20,7 +49,12 @@
                 </li>
             </ul>
         </li>
-        <li class="menu__item"><a class="menu__link">Mecze</a>
+        <li class="menu__item">
+            <a class="menu__link">Mecze
+                <span class="menu__icon">
+                    <i class="icon-basketball"></i>
+                </span>
+            </a>
             <ul class="menu__dropdown">
                 <li class="menu__item"><a href="{% url 'gamestats:schedule' %}" class="menu__link">Terminarz</a></li>
                 <li class="menu__item"><a href="{% url 'game:add' %}" class="menu__link">Dodaj</a></li>

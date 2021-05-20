@@ -3,14 +3,17 @@
 <html lang="pl-PL">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Koszykówka</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link rel="stylesheet" href="{% static 'fontello/css/fontello.css' %}">
 </head>
 <body>
 {% include 'layout/_header.html' %}
-{% block content %}
-{% endblock %}
+<div class="bg">
+    {% block content %}
+    {% endblock %}
+</div>
 <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
