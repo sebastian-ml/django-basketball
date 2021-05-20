@@ -18,6 +18,11 @@ class Home(TemplateView):
         return context
 
 
+class TeamDetail(DetailView):
+    model = Team
+    context_object_name = 'team'
+
+
 class TeamsList(ListView):
     model = Team
     context_object_name = 'teams'

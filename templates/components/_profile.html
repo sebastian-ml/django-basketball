@@ -1,11 +1,14 @@
 {% load static %}
 <header class="profile__header">
     <figure class="poster">
-        <img class="poster__img" src="{% static 'img/default-profile-picture.png' %}" alt="Profile picture">
+        <img class="poster__img" src="{% static picture_path %}" alt="Profile picture">
+{#        <img class="poster__img" src="{% static 'img/default-profile-picture.png' %}" alt="Profile picture">#}
     </figure>
     <div class="profile__personal">
         <h1 class="profile__name">{{ name }}</h1>
-        <h2 class="profile__team">{{ team }}</h2>
+        {% if team %}
+            <h2 class="profile__team">{{ team }}</h2>
+        {% endif %}
         <hr>
     </div>
 </header>

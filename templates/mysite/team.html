@@ -3,7 +3,7 @@
     <main class="main container">
         <div class="card">
             <div class="profile">
-                {% include 'components/_profile.html' with team=player.team name=full_name picture_path='img/default-profile-picture.png' %}
+                {% include 'components/_profile.html' with name=team.name team=None picture_path='img/default-team-profile-picture.png' %}
                 <div class="profile__body">
                 </div>
             </div>

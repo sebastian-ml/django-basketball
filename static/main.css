@@ -662,6 +662,7 @@ hr {
 }
 .poster__name, .poster__team {
   text-align: center;
+  margin-left: 0.5em;
 }
 
 select {

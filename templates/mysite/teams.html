@@ -1,4 +1,5 @@
 {% extends 'layout/base.html' %}
+{% load static %}
 {% block content %}
     <main class="main container">
         <div class="card card--100">
@@ -9,7 +10,16 @@
             <section class="card__body">
                 <ul class="ul">
                     {% for team in teams %}
-                        <li>{{ team.name }}</li>
+                        <li class="ul__item">
+                            <a class="link" href="{% url 'home:team-profile' team.pk %}">
+                                <figure class="poster">
+                                    <img class="poster__img poster__img--small" src="{% static 'img/default-team-profile-picture.png' %}" alt="Profile picture">
+                                    <figcaption class="poster__caption">
+                                        <p class="poster__name">{{ team.name }}</p>
+                                    </figcaption>
+                                </figure>
+                            </a>
+                        </li>
                     {% endfor %}
                 </ul>
             </section>
