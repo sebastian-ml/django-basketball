@@ -1,0 +1,9 @@
+.profile {
+  &__name, &__team {
+    text-align: center;
+  }
+
+  &__team {
+    color: $primary-color;
+  }
+}

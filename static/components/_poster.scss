@@ -1,0 +1,23 @@
+.poster {
+  @include flexbox(center, center);
+  margin: 0;
+
+  &__img {
+    max-width: 130px;
+    max-height: 130px;
+    border-radius: 50%;
+
+    &--small {
+      max-width: 50px;
+      max-height: 50px;
+    }
+  }
+
+  &__caption {
+    white-space: nowrap;
+  }
+
+  &__name, &__team {
+    text-align: center;
+  }
+}

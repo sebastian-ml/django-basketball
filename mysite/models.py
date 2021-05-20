@@ -23,3 +23,6 @@ class Player(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.middle_name} {self.last_name}' \
                f' ({self.team.name})'
+
+    def get_full_name(self):
+        return f'{self.first_name} {self.middle_name} {self.last_name}'

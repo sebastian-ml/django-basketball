@@ -1,0 +1,29 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+    <main class="main container">
+        <div class="card card--100">
+            <header class="card__header">
+                <h1>Lista zawodników</h1>
+                <hr>
+            </header>
+            <section class="card__body">
+                <ul class="ul">
+                    {% for player in players %}
+                        <li class="ul__item">
+                            <a class="link" href="{% url 'home:player-profile' player.pk %}">
+                                <figure class="poster">
+                                    <img class="poster__img poster__img--small" src="{% static 'img/default-profile-picture.png' %}" alt="Profile picture">
+                                    <figcaption class="poster__caption">
+                                        <p class="poster__name">{{ player.first_name }} {{ player.last_name }}</p>
+                                        <p class="poster__team">({{ player.team }})</p>
+                                    </figcaption>
+                                </figure>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+    </main>
+{% endblock %}

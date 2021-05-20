@@ -1,0 +1,12 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+    <main class="main container">
+        <div class="card">
+            <div class="profile">
+                {% include 'components/_profile.html' with team=player.team name=full_name %}
+                <div class="profile__body">
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
